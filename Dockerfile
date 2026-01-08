@@ -27,12 +27,5 @@ RUN dos2unix /app/wait-for-it.sh /app/start.sh
 RUN chmod +x /app/wait-for-it.sh
 RUN chmod +x /app/start.sh
 
-# Collect static files
-WORKDIR /app/medicare
-RUN python manage.py collectstatic --no-input
-
-# Return to app directory
-WORKDIR /app
-
 # Start command
 CMD ["/app/start.sh"]
