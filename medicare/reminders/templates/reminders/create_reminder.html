@@ -1,0 +1,10 @@
+<h1>Add reminder for {{ prescription.patient.username }}</h1>
+<p>Drug: {{ prescription.drug.name }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save reminder</button>
+</form>
+
+<a href="{% url 'doctor_dashboard' %}">⬅ Back to dashboard</a>

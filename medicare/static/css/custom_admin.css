@@ -1,0 +1,606 @@
+
+
+/* Make main content full width */
+#content {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0;
+}
+
+/* Branding */
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #06b6d4, #22c55e);
+  box-shadow: 0 0 20px rgba(34,197,94,.4);
+}
+
+.brand-text h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+.brand-text p {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 0.85rem;
+}
+
+/* Top actions */
+.admin-top-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-right: 1rem;
+}
+
+.admin-top-link {
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,.4);
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: #e5e7eb;
+}
+
+/* Hero */
+.dashboard-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem 1.8rem;
+  border-radius: 1.5rem;
+}
+
+.dashboard-hero h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.6rem;
+}
+.dashboard-hero p {
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Badges */
+.dashboard-badges {
+  display: flex;
+  gap: 1rem;
+}
+.badge-card {
+  padding: 0.8rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(148,163,184,0.3);
+  background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(26, 72, 180, 0.9));
+  min-width: 130px;
+}
+.badge-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  opacity: 0.8;
+}
+.badge-value {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+/* Grid of apps */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.app-card {
+  position: relative;
+  padding: 1.3rem 1.4rem;
+  border-radius: 1.4rem;
+
+  overflow: hidden;
+  transform: translateY(15px);
+  opacity: 0;
+  animation: card-in 0.5s ease forwards;
+}
+
+.app-card::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(circle at 10% 0%, rgba(0, 20, 169, 0.63), transparent 55%);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.app-card-header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.7rem;
+}
+
+.app-card-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.app-label {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(2, 185, 106, 0.75);
+  border: 1px solid rgba(148,163,184,0.5);
+}
+
+/* Model list */
+.model-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.model-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(148,163,184,0.2);
+}
+
+.model-item:last-child {
+  border-bottom: none;
+}
+
+.model-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.model-name {
+  font-size: 0.95rem;
+}
+
+.model-tag {
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(29, 0, 87, 0.2);
+  border: 1px solid rgba(34,197,94,0.6);
+  color: #bbf7d0;
+}
+
+.model-actions {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.btn-small {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.6);
+  text-decoration: none;
+  color: #e5e7eb;
+}
+.btn-small.btn-primary {
+  border-color: #22c55e;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #022c22;
+}
+
+/* Recent actions */
+.recent-actions {
+  padding: 1.2rem 1.3rem;
+  border-radius: 1.4rem;
+
+}
+
+.recent-actions h3 {
+  margin-top: 0;
+  margin-bottom: 0.7rem;
+}
+
+.recent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.recent-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  font-size: 0.85rem;
+}
+
+.recent-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #22c55e;
+}
+
+.recent-link {
+  color: #e5e7eb;
+  text-decoration: none;
+}
+.recent-time {
+  margin-left: auto;
+  opacity: 0.6;
+  font-size: 0.75rem;
+}
+
+/* Card animation */
+@keyframes card-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bg-blob {
+  position: absolute;
+  top: -80px;
+  width: 200px;
+  height: 200px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, rgba(59,130,246,0.4), transparent 60%);
+  opacity: 0.18;
+  filter: blur(8px);
+  pointer-events: none;
+  animation: float-blob 30s linear infinite;
+}
+
+@keyframes float-blob {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(200px) translateX(60px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
+
+.model-tag-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+.model-tag-link:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 10px rgba(34,197,94,0.7);
+}
+
+
+/* FINAL OVERRIDE – Force hide default Django sidebar */
+#nav-sidebar,
+#nav-sidebar * {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Remove the space reserved for it */
+#content,
+#content-main,
+#container {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+
+/* Hide the toggle arrow */
+#toggle-nav-sidebar {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Make sure nothing slides over when hidden */
+body {
+    --sidebar-width: 0 !important;
+}
+
+
+
+/* Center the whole dashboard container */
+.dashboard-page-center {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Limit width and keep it responsive */
+.dashboard-page-center .dashboard {
+    width: min(1400px, 100%);
+}
+
+/* Optional: center the "Site administration" title above it */
+#content > h1 {
+    max-width: 1400px;
+    margin: 1.5rem auto 0 auto;
+}
+/* --- Center the whole custom dashboard --- */
+
+/* Make the main dashboard a flex column and center its children */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* ⬅ horizontally center everything inside */
+}
+
+/* Limit the width of each main section and keep it centered */
+.dashboard-hero,
+.dashboard-grid,
+.recent-actions {
+    width: min(1200px, 100% - 3rem);  /* responsive, with side margins */
+}
+
+/* Optional: align the "Site administration" title with the dashboard */
+#content > h1 {
+    width: min(1200px, 100% - 3rem);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Fine-tune horizontal positioning of dashboard */
+.dashboard {
+    margin-left: 180px;   /* adjust this to move right */
+}
+
+
+/* inputs , submits*/
+/* Form labels & rows */
+.form-row,
+.inline-group .inline-related {
+    background: transparent;
+    border: none;
+}
+
+.form-row label {
+    color: #e5e7eb;
+    font-weight: 500;
+}
+
+/* Text inputs, selects, textareas */
+input.vTextField,
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+    background: #020617;
+    border-radius: 10px;
+    border: 1px solid rgba(148,163,184,0.5);
+    color: #e5e7eb;
+    padding: 0.4rem 0.6rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #22c55e;
+    box-shadow: 0 0 0 1px rgba(34,197,94,0.5);
+}
+
+/* Help text under fields */
+.help,
+.helptext {
+    color: #9ca3af;
+}
+
+
+.submit-row {
+    background: transparent;
+    border-top: 1px solid rgba(148,163,184,0.3);
+    padding: 1.2rem 2rem 1.5rem;
+}
+
+.submit-row input {
+    border-radius: 999px;
+    border: 1px solid rgba(148,163,184,0.6);
+    background: #0f172a;
+    color: #e5e7eb;
+    padding: 0.45rem 1.1rem;
+    font-weight: 500;
+    margin-right: 0.5rem;
+}
+
+.submit-row input.default {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border-color: #22c55e;
+    color: #022c22;
+}
+
+/*Bonus: nicer permission selector (Groups page)*/
+/* The dual selector widget (Available / Chosen permissions) */
+.selector {
+    background: #020617;
+    border-radius: 14px;
+    border: 1px solid rgba(148,163,184,0.6);
+}
+
+.selector .selector-available h2,
+.selector .selector-chosen h2 {
+    background: linear-gradient(135deg, #0284c7, #0f172a);
+    color: #e5e7eb;
+    border-radius: 14px 14px 0 0;
+    border-bottom: 1px solid rgba(148,163,184,0.6);
+}
+
+.selector .selector-filter input {
+    background: #020617;
+    color: #e5e7eb;
+}
+
+/* Arrows between the two boxes */
+.selector .selector-chooser a {
+    background: #22c55e;
+    border-radius: 999px;
+    border: none;
+}
+
+
+
+/* MAIN fix for dark form background */
+/* Apply a gradient to ALL add/change pages */
+
+
+
+/* Remove the default black blocks around fields */
+body.change-form .form-row,
+body.add-form .form-row,
+body.change-form .module,
+body.add-form .module {
+    background: transparent !important;
+    border: none !important;
+}
+
+
+
+
+
+/* ----------------------------- */
+/*           DARK MODE           */
+/* ----------------------------- */
+body[data-theme="dark"] #container {
+    background: #020617 !important;
+}
+
+/* dashboard background */
+body[data-theme="dark"] .dashboard-hero,
+body[data-theme="dark"] .app-card,
+body[data-theme="dark"] .recent-actions {
+    background: radial-gradient(circle at top left,
+                 rgba(59,130,246,0.22),
+                 rgba(15,23,42,0.95));
+    border: 1px solid rgba(148,163,184,0.35);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.75);
+    backdrop-filter: blur(12px);
+}
+
+/* inside content */
+body[data-theme="dark"] .model-item,
+body[data-theme="dark"] .model-list {
+    background: transparent;
+}
+
+
+
+
+/* ----------------------------- */
+/*           LIGHT MODE          */
+/* ----------------------------- */
+
+/* Light page background */
+body[data-theme="light"] #container {
+    background: #96a6bf !important;  /* soft gray */
+}
+
+/* Cards become SOLID, no transparency */
+body[data-theme="light"] .dashboard-hero,
+body[data-theme="light"] .app-card,
+body[data-theme="light"] .recent-actions {
+    background: #8eafe7;             /* white cards */
+    border-radius: 18px;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.07);
+}
+
+/* Remove blur effects (look bad on white) */
+body[data-theme="light"] .dashboard-hero,
+body[data-theme="light"] .app-card {
+    backdrop-filter: none !important;
+}
+
+/* Text colors */
+body[data-theme="light"] h1,
+body[data-theme="light"] h2,
+body[data-theme="light"] h3,
+body[data-theme="light"] p,
+body[data-theme="light"] label {
+    color: #1f2937 !important;  /* dark gray */
+}
+
+/* Buttons */
+body[data-theme="light"] .btn-small {
+    border-color: rgba(0,0,0,0.2);
+    background: #f9fafb;
+    color: #1f2937;
+}
+
+body[data-theme="light"] .btn-primary {
+    background: #22c55e !important;
+    color: white !important;
+}
+
+
+
+/* Form page cards */
+body[data-theme="light"].change-form #content-main,
+body[data-theme="light"].add-form #content-main {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+/* Inputs */
+body[data-theme="light"] input,
+body[data-theme="light"] select,
+body[data-theme="light"] textarea {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.2);
+    color: #1f2937;
+}
+
+
+/* FULL PAGE CENTERING FOR LOGIN */
+body.login {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center !important;   /* center vertically */
+    align-items: center !important;       /* center horizontally */
+    min-height: 100vh !important;         /* full height */
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Center wrappers without shrinking the form */
+body.login #container,
+body.login #content-main,
+body.login #content {
+    margin: 0 auto !important;
+    position: relative !important;
+    overflow: visible !important;
+    left: 0 !important;
+    right: 0 !important;
+}
+
+/* Give the login card a comfortable fixed width */
+body.login #content {
+    width: 300px !important;   /* increase to 480/500 if you want larger inputs */
+}
+
+
+
+
+

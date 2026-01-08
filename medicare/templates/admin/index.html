@@ -1,0 +1,82 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div class="dashboard-page-center">
+  <div class="dashboard">
+  <!-- Header / stats -->
+  <section class="dashboard-hero">
+    <div>
+      <h2>Welcome back, {{ request.user.first_name|default:request.user.username }} !</h2>
+      <p>Manage drugs, prescriptions and reminders from one clean dashboard.</p>
+    </div>
+
+    <div class="dashboard-badges">
+      <div class="badge-card">
+        <span class="badge-label">Total apps</span>
+        <span class="badge-value">{{ app_list|length }}</span>
+      </div>
+      <div class="badge-card">
+        <span class="badge-label">Today</span>
+        <span class="badge-value">{{ now|date:"d M Y" }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main grid -->
+  <section class="dashboard-grid">
+
+    {% for app in app_list %}
+      <article class="app-card">
+        <header class="app-card-header">
+          <h3>{{ app.name }}</h3>
+          <span class="app-label">{{ app.app_label }}</span>
+        </header>
+
+        <ul class="model-list">
+          {% for model in app.models %}
+            <li class="model-item">
+                <div class="model-info">
+                    <div class="model-name">{{ model.name }}</div>
+                        {% if model.add_url %}
+                        <a href="{{ model.add_url }}" class="model-tag model-tag-link">+ Add</a>  <!-- ✅ clickable -->
+                        {% endif %}
+                    </div>
+
+
+              <div class="model-actions">
+                {% if model.admin_url %}
+                  <a href="{{ model.admin_url }}" class="btn-small">View</a>
+                {% endif %}
+                {% if model.add_url %}
+                  <a href="{{ model.add_url }}" class="btn-small btn-primary">New</a>
+                {% endif %}
+                </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </article>
+    {% endfor %}
+
+  </section>
+
+  <!-- Recent actions -->
+  {% if app_list and recent_actions %}
+  <section class="recent-actions">
+    <h3>Recent activity</h3>
+    <ul class="recent-list">
+      {% for action in recent_actions %}
+        <li class="recent-item">
+          <span class="recent-dot"></span>
+          <a href="{{ action.get_admin_url }}" class="recent-link">
+            {{ action }}
+          </a>
+          <span class="recent-time">{{ action.action_time|timesince }} ago</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}

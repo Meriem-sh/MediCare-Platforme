@@ -1,0 +1,152 @@
+/* ===== BASE ===== */
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: linear-gradient(135deg, #e9f5ff 0%, #d8f1ff 40%, #c7e9ff 100%);
+    color: #023047;
+}
+
+/* ===== CONTAINER ===== */
+.dashboard-container {
+    width: 85%;
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 0;
+}
+
+/* ===== HEADER ===== */
+.top-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.top-header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.welcome {
+    font-size: 18px;
+    opacity: 0.8;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+    display: inline-block;
+    padding: 10px 18px;
+    margin: 8px;
+    border-radius: 8px;
+    font-size: 15px;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.btn.primary {
+    background: #0077b6;
+    color: white;
+}
+
+.btn.primary:hover {
+    background: #005f8b;
+}
+
+.btn.secondary {
+    background: #e3f2fd;
+    color: #023047;
+    border: 1px solid #90caf9;
+}
+
+.btn.secondary:hover {
+    background: #bbdefb;
+}
+
+.btn.small {
+    background: #219ebc;
+    color: white;
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+.btn.small:hover {
+    background: #1a8199;
+}
+
+/* ===== CARDS ===== */
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.card-title {
+    font-size: 22px;
+    margin-bottom: 18px;
+    border-left: 6px solid #0077b6;
+    padding-left: 10px;
+}
+
+/* ===== LIST ===== */
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.condition, .drug {
+    opacity: 0.7;
+}
+
+.empty {
+    opacity: 0.6;
+    font-style: italic;
+    padding: 10px 0;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+.actions {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.btn.edit {
+    background-color: #4caf50;
+}
+
+.btn.delete {
+    background-color: #e53935;
+}
+
+
+.badge {
+    background-color: #ff7043;
+    color: white;
+    border-radius: 999px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.7rem;
+    margin-left: 4px;
+}

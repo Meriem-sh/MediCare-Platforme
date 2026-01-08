@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit Prescription{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/edit_prescription.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="edit-page">
+    <div class="edit-card">
+
+        <h2>Edit Prescription</h2>
+        <p class="patient-info">
+            Patient: <strong>{{ prescription.patient.username }}</strong>
+        </p>
+
+        <form method="post" id="edit-form">
+            {% csrf_token %}
+            <div class="form-fields">
+                {{ form.as_p }}
+            </div>
+
+            <div class="edit-actions">
+                <button type="submit" class="btn btn-primary save-btn">Save changes</button>
+                <a href="{% url 'doctor_dashboard' %}" class="btn btn-secondary cancel-btn">Cancel</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<link rel="stylesheet" href="{% static 'css/edit_prescription.css' %}">
+<script src="{% static 'js/edit_prescription.js' %}"></script>
+{% endblock %}

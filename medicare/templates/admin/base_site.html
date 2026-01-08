@@ -1,0 +1,31 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}MediCare Admin{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/custom_admin.css' %}">
+{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <script src="{% static 'js/custom_admin.js' %}"></script>
+{% endblock %}
+
+{% block branding %}
+  <div class="admin-brand">
+    <div class="brand-logo">💊</div>
+    <div class="brand-text">
+      <h1>MediCare Admin</h1>
+      <p>Smart medication & adherence dashboard</p>
+    </div>
+  </div>
+{% endblock %}
+
+{% block nav-global %}
+  <div class="admin-top-actions">
+    <a href="/" class="admin-top-link">View site</a>
+    <a href="/admin/auth/user/" class="admin-top-link">Users</a>
+  </div>
+{% endblock %}
