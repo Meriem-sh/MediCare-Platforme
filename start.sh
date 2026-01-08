@@ -3,8 +3,9 @@
 echo "🚀 Starting Medicare application..."
 cd /app/medicare
 
-echo "⏳ Waiting for PostgreSQL..."
-/app/wait-for-it.sh ${POSTGRES_HOST}:${POSTGRES_PORT} --timeout=60 --strict -- echo "✅ PostgreSQL is ready!"
+# انتظار PostgreSQL
+echo "⏳ Waiting for PostgreSQL to be ready..."
+/app/wait-for-it.sh ${POSTGRES_HOST:-dpg-d5fudbogjchc73ebm0cg-a}:${POSTGRES_PORT:-5432} --timeout=60 --strict -- echo "✅ PostgreSQL is ready!"
 
 echo "📊 Running migrations..."
 python manage.py migrate --no-input
