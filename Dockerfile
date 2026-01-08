@@ -21,6 +21,3 @@ RUN chmod +x /app/wait-for-it.sh
 
 # Expose port
 EXPOSE 8000
-
-# Run migrations and start server
-CMD cd medicare && python manage.py migrate && uwsgi --ini /app/config/uwsgi/uwsgi.ini
