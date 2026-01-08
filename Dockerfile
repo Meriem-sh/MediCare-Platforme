@@ -19,7 +19,10 @@ RUN pip install -r requirements.txt
 
 # Copy project
 COPY . .
+
+# Make scripts executable
 RUN chmod +x /app/wait-for-it.sh
+RUN chmod +x /app/start.sh
 
 # Collect static files
 WORKDIR /app/medicare
@@ -29,5 +32,5 @@ WORKDIR /app
 
 EXPOSE 8000
 
-# Run uwsgi directly (بدون uwsgi.ini)
-CMD ["uwsgi", "--http", "0.0.0.0:8000", "--chdir", "/app/medicare", "--module", "medicare.wsgi:application", "--master", "--processes", "4", "--threads", "2", "--vacuum", "--die-on-term"]
+# Use start.sh
+CMD ["/app/start.sh"]
