@@ -3,11 +3,14 @@ set -e
 
 echo "🚀 Starting Medicare application..."
 
+# الانتقال إلى مجلد المشروع
+cd /app/medicare
+
 # جمع الملفات الثابتة
 echo "📊 Collecting static files..."
 python manage.py collectstatic --noinput
 
-# Retry logic لـ migrations (تجربة 10 مرات)
+# Retry logic لـ migrations
 echo "📊 Running migrations with retry..."
 MAX_RETRIES=10
 RETRY_COUNT=0
@@ -42,7 +45,7 @@ fi
 
 echo "✅ Setup complete! Starting uWSGI..."
 
-# تشغيل uWSGI
+# تشغيل uWSGI (من مجلد medicare)
 exec uwsgi --http 0.0.0.0:8000 \
       --module medicare.wsgi:application \
       --master \
