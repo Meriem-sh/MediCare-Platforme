@@ -8,16 +8,15 @@ ADMINS = [
     ('Meriem-Sh', 'meriemuncoding@gmail.com'),
 ]
 
-# لـ Render
 ALLOWED_HOSTS = [
     "medicareproject.com",
     "www.medicareproject.com",
     "localhost",
     "127.0.0.1",
-    "*.onrender.com",  # مهم لـ Render
+    "*.onrender.com",
+    'medicare-platform-bjlp.onrender.com',
 ]
 
-# PostgreSQL Database (من Render) - صُححت الأسماء
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -29,7 +28,7 @@ DATABASES = {
     }
 }
 
-# Redis (من Upstash)
+# Redis Upstash
 REDIS_URL = os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379')
 CACHES['default']['LOCATION'] = REDIS_URL
 CHANNEL_LAYERS['default']['CONFIG']['hosts'] = [REDIS_URL]
