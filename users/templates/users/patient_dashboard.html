@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/patient_dashboard.css' %}">
+    <script defer src="{% static 'js/patient_dashboard.js' %}"></script>
+</head>
+<body>
+
+<div class="patient-page">
+
+    <header class="patient-header">
+        <div>
+            <h1> Patient Dashboard</h1>
+            <p class="welcome-text">Welcome, {{ request.user.username }}!</p>
+        </div>
+
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn logout-btn">
+                Logout
+            </button>
+        </form>
+
+    </header>
+
+<div class="patient-info-card">
+    <h2>My Medical Profile</h2>
+
+    {% if patient.disease %}
+        <p>
+            Main disease:
+            <strong>{{ patient.disease.name }}</strong>
+            {% if patient.disease.is_rare %}
+                <span class="badge badge-rare">Rare disease</span>
+            {% endif %}
+        </p>
+
+        <p>
+            Recommended specialty:
+            <strong>
+                {% if patient.disease.recommended_specialty %}
+                    {{ patient.disease.get_recommended_specialty_display }}
+                {% else %}
+                    Not specified yet
+                {% endif %}
+            </strong>
+        </p>
+
+        <!-- Call to action -->
+        <a href="{% url 'suggest_specialists' %}" class="btn btn-primary">
+            Find my specialist
+        </a>
+    {% else %}
+        <p>You have not selected a main disease yet.</p>
+        <p class="small">
+            Please contact your doctor or the admin to update your profile so we can recommend a specialist.
+        </p>
+    {% endif %}
+</div>
+
+
+    <!-- PRESCRIPTIONS -->
+    <section class="card">
+        <div class="card-header">
+            <h2>Your prescriptions</h2>
+            <p>Here are the treatments prescribed by your doctors.</p>
+        </div>
+
+        {% if prescriptions %}
+            <div class="table-wrapper">
+                <table class="prescription-table">
+                    <thead>
+                        <tr>
+                            <th>Drug</th>
+                            <th>Dosage</th>
+                            <th>Frequency</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                            <th>Doctor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in prescriptions %}
+                        <tr>
+                            <td>{{ p.drug.name }}</td>
+                            <td>{{ p.dosage }}</td>
+                            <td>{{ p.frequency }}</td>
+                            <td>{{ p.start_date }}</td>
+                            <td>{{ p.end_date }}</td>
+                            <td>{{ p.doctor.username }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="empty-text">You have no prescriptions yet.</p>
+        {% endif %}
+    </section>
+
+    <!-- ACTIVE REMINDERS -->
+    <section class="card">
+        <div class="card-header">
+            <h2>Your active reminders</h2>
+            <p>Tap “Taken” or “Missed” when you take your dose.</p>
+        </div>
+
+        {% if reminders %}
+            <ul class="reminder-list">
+                {% for r in reminders %}
+                    <li class="reminder-item">
+                        <div class="reminder-main">
+                            <span class="pill-name">{{ r.prescription.drug.name }}</span>
+                            <span class="pill-time">at {{ r.time }}</span>
+                        </div>
+                        <div class="reminder-actions">
+                            <a href="{% url 'mark_dose_taken' r.id %}" class="pill-btn taken">Taken ✅</a>
+                            <a href="{% url 'mark_dose_missed' r.id %}" class="pill-btn missed">Missed ❌</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-text">You have no active reminders.</p>
+        {% endif %}
+    </section>
+
+    <!-- DOSE HISTORY -->
+    <section class="card">
+        <div class="card-header">
+            <h2>Dose history</h2>
+            <p>See when doses were taken or missed.</p>
+        </div>
+
+        {% if dose_logs %}
+            <ul class="history-list">
+                {% for log in dose_logs %}
+                    <li class="history-item" data-status="{{ log.status|lower }}">
+                        <span class="history-time">{{ log.logged_at }}</span>
+                        <span class="history-drug">{{ log.reminder.prescription.drug.name }}</span>
+                        <span class="history-status">{{ log.status }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-text">No doses logged yet.</p>
+        {% endif %}
+    </section>
+
+</div>
+
+{% block extra_scripts %}
+<script src="{% static 'js/patient_reminders.js' %}"></script>
+{% endblock %}
+
+</body>
+</html>

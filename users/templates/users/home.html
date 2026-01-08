@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medicare – Welcome</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+<header class="hero">
+    <div class="hero-content">
+        <h1>Welcome to <span>Medicare</span></h1>
+        <p class="tagline">
+            A smart platform connecting patients and doctors, with better follow-up and safe medication management.
+        </p>
+
+        <div class="hero-actions">
+            <!-- Login for doctors & patients -->
+            <a href="{% url 'login' %}" class="btn primary">
+                Login as Doctor / Patient
+            </a>
+
+            <!-- Sign up -->
+            <a href="{% url 'signup' %}" class="btn secondary">
+                Create an Account
+            </a>
+        </div>
+
+        <p class="small-text">
+            Are you an administrator?  
+            <a href="{% url 'admin:index' %}">Go to Admin Portal</a>
+        </p>
+    </div>
+</header>
+
+<main class="sections">
+    <section class="cards">
+        <div class="card">
+            <h2>For Patients</h2>
+            <p>
+                Track your prescriptions, receive reminders, and get directed to the right specialist
+                based on your disease.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>For Doctors</h2>
+            <p>
+                Manage patient treatments, monitor adherence, and organize medications in a clear,
+                secure dashboard.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>For Rare Diseases</h2>
+            <p>
+                Support for rare disease patients using Orpha codes, specialist routing, and safer
+                medication decisions.
+            </p>
+        </div>
+    </section>
+
+    <section class="about">
+        <h2>About Medicare</h2>
+        <p>
+            Medicare is a web platform designed to improve communication between patients and doctors,
+            reduce medication errors, and provide smarter support for chronic and rare diseases.
+        </p>
+    </section>
+</main>
+
+<footer class="footer">
+    <p>&copy; {{ now|date:"Y" }} Medicare. All rights reserved.</p>
+</footer>
+</body>
+</html>

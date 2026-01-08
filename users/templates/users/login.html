@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User login</title>
+
+    <!-- GLOBAL STATIC: static/css/user_login.css -->
+    <link rel="stylesheet" href="{% static 'css/user_login.css' %}">
+</head>
+<body>
+
+<div class="login-card">
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <p>
+        <a href="{% url 'password_reset' %}">Forgot password ?</a>
+    </p>
+</div>
+
+<!-- GLOBAL STATIC: static/js/user_login.js -->
+<script src="{% static 'js/user_login.js' %}"></script>
+</body>
+</html>
