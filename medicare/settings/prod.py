@@ -1,5 +1,10 @@
 from decouple import config
 from .base import *
+from .base import *
+
+# Ensure staticfiles is included
+if 'django.contrib.staticfiles' not in INSTALLED_APPS:
+    INSTALLED_APPS += ['django.contrib.staticfiles']
 
 DEBUG = False
 ADMINS = [
