@@ -20,7 +20,7 @@ COPY . .
 RUN chmod +x /app/wait-for-it.sh
 
 # Collect static files
-RUN cd medicare && python manage.py collectstatic --noinput
+RUN cd medicare && DJANGO_SETTINGS_MODULE=medicare.settings.prod python manage.py collectstatic --noinput
 
 # Expose port
 EXPOSE 8000
