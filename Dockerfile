@@ -1,26 +1,29 @@
 FROM python:3.12.3
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-ENV DJANGO_SETTINGS_MODULE=medicare.settings.prod
-
-WORKDIR /app
-
-# Install system dependencies
+# Install system dependencies including dos2unix
 RUN apt-get update && apt-get install -y \
     gcc \
     python3-dev \
+    dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
+# Set working directory
+WORKDIR /app
+
+# Upgrade pip
 RUN pip install --upgrade pip
+
+# Copy and install Python dependencies
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# Copy project
+# Copy all project files
 COPY . .
 
-# Make scripts executable
+# Fix line endings for shell scripts
+RUN dos2unix /app/wait-for-it.sh /app/start.sh
+
+# Make shell scripts executable
 RUN chmod +x /app/wait-for-it.sh
 RUN chmod +x /app/start.sh
 
@@ -28,9 +31,8 @@ RUN chmod +x /app/start.sh
 WORKDIR /app/medicare
 RUN python manage.py collectstatic --no-input
 
+# Return to app directory
 WORKDIR /app
 
-EXPOSE 8000
-
-# Use start.sh
+# Start command
 CMD ["/app/start.sh"]

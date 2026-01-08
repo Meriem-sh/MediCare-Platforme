@@ -1,8 +1,10 @@
+#!/bin/bash
+
 echo "🚀 Starting Medicare application..."
 cd /app/medicare
 
+# Extract DB host from DATABASE_URL
 if [ -n "$DATABASE_URL" ]; then
-    # Extract hostname and port from DATABASE_URL
     DB_HOST=$(echo $DATABASE_URL | sed -E 's|.*@([^:/]+).*|\1|')
     DB_PORT=$(echo $DATABASE_URL | sed -E 's|.*:([0-9]+)/.*|\1|')
     
@@ -19,7 +21,7 @@ echo "👤 Creating admin users..."
 python manage.py ensure_admin
 
 if [ "$LOAD_FAKE_DATA" = "true" ]; then
-    echo "🎲 Generating fake data with populate_data..."
+    echo "🎲 Generating fake data..."
     python manage.py populate_data
 fi
 
