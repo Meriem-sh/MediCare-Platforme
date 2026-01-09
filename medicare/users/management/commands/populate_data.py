@@ -1,142 +1,129 @@
 from django.core.management.base import BaseCommand
-from faker import Faker
-from users.models import CustomUser
+from django.contrib.auth import get_user_model
 from drugs.models import Drug, Disease
 from prescriptions.models import Prescription
-from datetime import date, timedelta
 from reminders.models import Reminder
-from django.utils import timezone
+from faker import Faker
 import random
+from datetime import datetime, timedelta
+
+User = get_user_model()
+fake = Faker()
 
 class Command(BaseCommand):
-    help = 'Generate fake data for MediCare platform'
-
-    def add_arguments(self, parser):
-        parser.add_argument(
-            '--doctors',
-            type=int,
-            default=5,
-            help='Number of doctors to create'
-        )
-        parser.add_argument(
-            '--patients',
-            type=int,
-            default=10,
-            help='Number of patients to create'
-        )
-        parser.add_argument(
-            '--prescriptions',
-            type=int,
-            default=20,
-            help='Number of prescriptions to create'
-        )
+    help = 'Populate database with fake data'
 
     def handle(self, *args, **options):
-        fake = Faker()
-        
-        num_doctors = options['doctors']
-        num_patients = options['patients']
-        num_prescriptions = options['prescriptions']
+        self.stdout.write('Starting data generation...')
 
-        self.stdout.write(self.style.SUCCESS('Starting data generation...'))
-
-        # 1. Create Diseases
+        # Create Diseases first
         self.stdout.write('Creating diseases...')
         diseases = []
         disease_data = [
-            {'name': 'Diabetes', 'description': 'Chronic disease affecting blood sugar levels'},
-            {'name': 'Hypertension', 'description': 'High blood pressure condition'},
-            {'name': 'Asthma', 'description': 'Respiratory condition causing breathing difficulties'},
-            {'name': 'Arthritis', 'description': 'Joint inflammation and pain'},
-            {'name': 'Heart Disease', 'description': 'Various conditions affecting the heart'},
-            {'name': 'Chronic Kidney Disease', 'description': 'Progressive loss of kidney function'},
+            {'name': 'Diabetes', 'is_rare': False, 'recommended_specialty': 'endocrinologist'},
+            {'name': 'Hypertension', 'is_rare': False, 'recommended_specialty': 'cardiologist'},
+            {'name': 'Asthma', 'is_rare': False, 'recommended_specialty': 'pulmonologist'},
+            {'name': 'Arthritis', 'is_rare': False, 'recommended_specialty': 'other'},
+            {'name': 'Heart Disease', 'is_rare': False, 'recommended_specialty': 'cardiologist'},
+            {'name': 'Chronic Kidney Disease', 'is_rare': True, 'recommended_specialty': 'other'},
         ]
         
         for disease_info in disease_data:
             disease, created = Disease.objects.get_or_create(
                 name=disease_info['name'],
-                defaults={'description': disease_info['description']}
+                defaults={
+                    'is_rare': disease_info['is_rare'],
+                    'recommended_specialty': disease_info['recommended_specialty'],
+                    'description': f'Medical condition: {disease_info["name"]}'
+                }
             )
             diseases.append(disease)
             if created:
                 self.stdout.write(f'  ✓ Disease created: {disease.name}')
 
-        # 2. Create Doctors
-        self.stdout.write(f'\nCreating {num_doctors} doctors...')
+        # Create Doctors
+        self.stdout.write('Creating 5 doctors...')
         doctors = []
         specialties = ['generalist', 'oncologist', 'cardiologist', 'pediatrician', 
-              'neurologist', 'endocrinologist', 'pulmonologist', 'other']
-
-        for i in range(num_doctors):
+                      'endocrinologist', 'pulmonologist', 'other']
+        
+        for i in range(5):
             username = f'doctor{i+1}'
-            if CustomUser.objects.filter(username=username).exists():
-                self.stdout.write(f'  ⊘ Doctor already exists: {username}')
-                doctors.append(CustomUser.objects.get(username=username))
-                continue
-                
-            doctor = CustomUser.objects.create_user(
-                username=username,
-                email=fake.email(),
-                password='doctor123',
-                first_name=fake.first_name(),
-                last_name=fake.last_name(),
-                role='doctor',
-                phone=fake.phone_number()[:20],
-                specialty=random.choice(specialties)
-            )
-            doctors.append(doctor)
-            self.stdout.write(f'  ✓ Doctor created: {doctor.username} ({doctor.specialty})')
+            
+            
+            if not User.objects.filter(username=username).exists():
+                doctor = User.objects.create_user(
+                    username=username,
+                    email=f'doctor{i+1}@medicare.com',
+                    password='password123',
+                    first_name=fake.first_name(),
+                    last_name=fake.last_name(),
+                    role='doctor',
+                    phone=fake.phone_number()[:20],
+                    specialty=random.choice(specialties)
+                )
+                doctors.append(doctor)
+                self.stdout.write(f'  ✓ Doctor created: {doctor.username} ({doctor.specialty})')
+            else:
+                doctor = User.objects.get(username=username)
+                doctors.append(doctor)
+                self.stdout.write(f'  ℹ️  Doctor already exists: {doctor.username}')
 
-        # 3. Create Patients
-        self.stdout.write(f'\nCreating {num_patients} patients...')
+        # Create Patients
+        self.stdout.write('Creating 10 patients...')
         patients = []
         
-        for i in range(num_patients):
+        for i in range(10):
             username = f'patient{i+1}'
-            if CustomUser.objects.filter(username=username).exists():
-                self.stdout.write(f'  ⊘ Patient already exists: {username}')
-                patients.append(CustomUser.objects.get(username=username))
-                continue
+            
+            
+            if not User.objects.filter(username=username).exists():
                 
-            patient = CustomUser.objects.create_user(
-                username=username,
-                email=fake.email(),
-                password='patient123',
-                first_name=fake.first_name(),
-                last_name=fake.last_name(),
-                role='patient',
-                phone=fake.phone_number()[:20],
-                date_of_birth=fake.date_of_birth(minimum_age=18, maximum_age=80),
-                assigned_doctor=random.choice(doctors),
-                disease=random.choice(diseases)
-            )
-            patients.append(patient)
-            self.stdout.write(f'  ✓ Patient created: {patient.username} - Disease: {patient.disease.name}')
+                disease = random.choice(diseases)
+                
+                patient = User.objects.create_user(
+                    username=username,
+                    email=f'patient{i+1}@medicare.com',
+                    password='password123',
+                    first_name=fake.first_name(),
+                    last_name=fake.last_name(),
+                    role='patient',
+                    phone=fake.phone_number()[:20],
+                    condition=disease.name,
+                    disease=disease,
+                    assigned_doctor=random.choice(doctors)
+                )
+                patients.append(patient)
+                self.stdout.write(f'  ✓ Patient created: {patient.username} - {patient.condition}')
+            else:
+                patient = User.objects.get(username=username)
+                patients.append(patient)
+                self.stdout.write(f'  ℹ️  Patient already exists: {patient.username}')
 
-        # 4. Create Drugs
-        self.stdout.write('\nCreating drugs...')
+        # Create Drugs
+        self.stdout.write('Creating 10 drugs...')
         drugs = []
         drug_data = [
-            {'name': 'Aspirin', 'strength': '100mg', 'condition': 'Pain', 'dosage_form': 'Tablet'},
-            {'name': 'Paracetamol', 'strength': '500mg', 'condition': 'Pain/Fever', 'dosage_form': 'Tablet'},
-            {'name': 'Ibuprofen', 'strength': '200mg', 'condition': 'Pain/Inflammation', 'dosage_form': 'Tablet'},
-            {'name': 'Amoxicillin', 'strength': '250mg', 'condition': 'Bacterial Infection', 'dosage_form': 'Capsule'},
-            {'name': 'Metformin', 'strength': '500mg', 'condition': 'Diabetes', 'dosage_form': 'Tablet'},
-            {'name': 'Lisinopril', 'strength': '10mg', 'condition': 'Hypertension', 'dosage_form': 'Tablet'},
-            {'name': 'Omeprazole', 'strength': '20mg', 'condition': 'Acid Reflux', 'dosage_form': 'Capsule'},
-            {'name': 'Simvastatin', 'strength': '40mg', 'condition': 'High Cholesterol', 'dosage_form': 'Tablet'},
-            {'name': 'Losartan', 'strength': '50mg', 'condition': 'Hypertension', 'dosage_form': 'Tablet'},
-            {'name': 'Levothyroxine', 'strength': '50mcg', 'condition': 'Thyroid', 'dosage_form': 'Tablet'},
+            {'name': 'Metformin', 'condition': 'Diabetes', 'dosage_form': 'Tablet', 'strength': '500 mg'},
+            {'name': 'Lisinopril', 'condition': 'Hypertension', 'dosage_form': 'Tablet', 'strength': '10 mg'},
+            {'name': 'Albuterol', 'condition': 'Asthma', 'dosage_form': 'Inhaler', 'strength': '90 mcg'},
+            {'name': 'Ibuprofen', 'condition': 'Arthritis', 'dosage_form': 'Tablet', 'strength': '200 mg'},
+            {'name': 'Aspirin', 'condition': 'Heart Disease', 'dosage_form': 'Tablet', 'strength': '75 mg'},
+            {'name': 'Amoxicillin', 'condition': 'Infection', 'dosage_form': 'Capsule', 'strength': '250 mg'},
+            {'name': 'Omeprazole', 'condition': 'Acid Reflux', 'dosage_form': 'Capsule', 'strength': '20 mg'},
+            {'name': 'Atorvastatin', 'condition': 'High Cholesterol', 'dosage_form': 'Tablet', 'strength': '10 mg'},
+            {'name': 'Paracetamol', 'condition': 'Pain', 'dosage_form': 'Tablet', 'strength': '500 mg'},
+            {'name': 'Salbutamol', 'condition': 'Asthma', 'dosage_form': 'Inhaler', 'strength': '100 mcg'},
         ]
 
         for drug_info in drug_data:
             drug, created = Drug.objects.get_or_create(
                 name=drug_info['name'],
                 defaults={
-                    'description': f"{drug_info['name']} for {drug_info['condition']}",
-                    'strength': drug_info['strength'],
-                    'dosage_form': drug_info['dosage_form'],
+                    'description': f'Medication for {drug_info["condition"]}',
                     'condition': drug_info['condition'],
+                    'dosage_form': drug_info['dosage_form'],
+                    'strength': drug_info['strength'],
                     'is_active': True
                 }
             )
@@ -144,69 +131,45 @@ class Command(BaseCommand):
             if created:
                 self.stdout.write(f'  ✓ Drug created: {drug.name} ({drug.strength})')
 
-        # 5. Create Prescriptions
-        self.stdout.write(f'\nCreating {num_prescriptions} prescriptions...')
-        frequencies = ['Once daily', 'Twice daily', 'Three times daily', 'Every 8 hours', 'As needed']
-
-        for i in range(num_prescriptions):
-            start_date = date.today() - timedelta(days=random.randint(0, 30))
-            end_date = start_date + timedelta(days=random.randint(7, 30))
-            
+        # Create Prescriptions
+        self.stdout.write('Creating 15 prescriptions...')
+        prescriptions = []
+        dosages = ['1 tablet', '2 tablets', '1 capsule', '2 puffs']
+        frequencies = ['Once daily', 'Twice daily', '3 times daily', 'As needed']
+        
+        for i in range(15):
             prescription = Prescription.objects.create(
-                patient=random.choice(patients),
                 doctor=random.choice(doctors),
+                patient=random.choice(patients),
                 drug=random.choice(drugs),
-                dosage=f'{random.randint(1, 3)} tablet(s)',
+                dosage=random.choice(dosages),
                 frequency=random.choice(frequencies),
-                start_date=start_date,
-                end_date=end_date,
-                notes=fake.text(max_nb_chars=100)
+                start_date=datetime.now().date(),
+                end_date=datetime.now().date() + timedelta(days=random.randint(7, 90)),
+                notes=fake.sentence()
             )
+            prescriptions.append(prescription)
+            self.stdout.write(f'  ✓ Prescription {i+1} created')
 
-            self.stdout.write(f'  ✓ Prescription #{i+1}: {prescription.drug.name} for {prescription.patient.username}')
-
-        # 6. Create Reminders
-        self.stdout.write('\nCreating reminders...')
-        reminder_count = 0
-
-        # Get prescriptions to create reminders for them
-        all_prescriptions = list(Prescription.objects.all())
-
-        if all_prescriptions:
-            # Create 2-3 reminders per prescription (for different times of day)
-            from datetime import time as dt_time
-            times_of_day = [
-                dt_time(8, 0),   # 8:00 AM
-                dt_time(14, 0),  # 2:00 PM
-                dt_time(20, 0),  # 8:00 PM
-            ]
+        # Create Reminders
+        self.stdout.write('Creating 20 reminders...')
+        reminder_times = ['08:00:00', '12:00:00', '18:00:00', '22:00:00']
+        
+        for i in range(20):
+            prescription = random.choice(prescriptions)
             
-            for prescription in all_prescriptions[:10]:  # First 10 prescriptions
-                num_reminders = random.randint(1, 2)  # 1-2 reminders per prescription
-                for _ in range(num_reminders):
-                    reminder = Reminder.objects.create(
-                        prescription=prescription,
-                        patient=prescription.patient,
-                        time=random.choice(times_of_day),
-                        is_active=True
-                    )
-                    reminder_count += 1
-                    self.stdout.write(f'  ✓ Reminder created for {prescription.patient.username} at {reminder.time}')
-        else:
-            self.stdout.write('  ⊘ No prescriptions available to create reminders')
+            Reminder.objects.create(
+                prescription=prescription,
+                patient=prescription.patient,
+                time=random.choice(reminder_times),
+                is_active=True
+            )
+            self.stdout.write(f'  ✓ Reminder {i+1} created')
 
-        # Summary
-        self.stdout.write('\n' + '='*60)
-        self.stdout.write(self.style.SUCCESS('✅ Data generation completed successfully!'))
-        self.stdout.write('='*60)
-        self.stdout.write(f'Total Diseases: {Disease.objects.count()}')
-        self.stdout.write(f'Total Doctors: {CustomUser.objects.filter(role="doctor").count()}')
-        self.stdout.write(f'Total Patients: {CustomUser.objects.filter(role="patient").count()}')
-        self.stdout.write(f'Total Drugs: {Drug.objects.count()}')
-        self.stdout.write(f'Total Prescriptions: {Prescription.objects.count()}')
-        self.stdout.write(f'Total Reminders: {Reminder.objects.count()}')
-        self.stdout.write('\n' + '='*60)
-        self.stdout.write(self.style.WARNING('Login credentials:'))
-        self.stdout.write('  Doctors: username=doctor1-{}, password=doctor123'.format(num_doctors))
-        self.stdout.write('  Patients: username=patient1-{}, password=patient123'.format(num_patients))
-        self.stdout.write('='*60)
+        self.stdout.write(self.style.SUCCESS('\n✅ Fake data generated successfully!'))
+        self.stdout.write(f'  - {len(diseases)} Diseases')
+        self.stdout.write(f'  - {len(doctors)} Doctors')
+        self.stdout.write(f'  - {len(patients)} Patients')
+        self.stdout.write(f'  - {len(drugs)} Drugs')
+        self.stdout.write(f'  - {len(prescriptions)} Prescriptions')
+        self.stdout.write(f'  - 20 Reminders')
