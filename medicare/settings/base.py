@@ -23,15 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = 'ka+xr)3pcq14nl!usr+3)ag834_w)-)yg=s-#pt0^5=^oac7sc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-'''DEBUG = True'''
+# DEBUG = True
 
 ALLOWED_HOSTS = []
 
 
-#added 
+# Added 
 AUTH_USER_MODEL = 'users.CustomUser'
 LOGIN_REDIRECT_URL = '/users/dashboard/'
-
 
 
 # Application definition
@@ -51,7 +50,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ← أضف هذا السطر
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -69,6 +68,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -83,12 +83,13 @@ WSGI_APPLICATION = 'medicare.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-'''DATABASES = {
+# Default database for local development
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}'''
+}
 
 
 # Password validation
@@ -126,21 +127,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
-'''
-#added
-import os
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-STATICFILES_DIRS = [
-    BASE_DIR / 'medicare' / 'static',   # your source folder: /code/medicare/static
-]'''
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'       # collected folder: /code/static
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# WhiteNoise - Compression and Caching
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # Default primary key field type
@@ -148,7 +145,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'       # collected folder: /code/static
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#for the email part : emails are printed in the terminal, not sent.
+
+# For the email part: emails are printed in the terminal, not sent.
 from decouple import config
 
 EMAIL_BACKEND = config(
@@ -161,6 +159,8 @@ DEFAULT_FROM_EMAIL = config(
     default='Medicare <no-reply@medicare.test>'
 )
 
+
+# Redis Cache - Default configuration
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
@@ -168,6 +168,7 @@ CACHES = {
     }
 }
 
+# Django Channels - Default configuration
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
@@ -176,12 +177,3 @@ CHANNEL_LAYERS = {
         },
     },
 }
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# WhiteNoise - Compression and Caching
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
