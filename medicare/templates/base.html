@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -21,17 +21,17 @@
     
     <style>
         * {
-            font-family: 'Cairo', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
         
         body {
-            direction: rtl;
-            text-align: right;
+            direction: ltr;
+            text-align: left;
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
             <!-- Logo -->
@@ -40,7 +40,7 @@
                 <span class="fw-bold text-primary fs-4">MediCare</span>
             </a>
             
-            <!-- Toggle Button for Mobile -->
+            <!-- Mobile Toggle Button -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -50,7 +50,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home' %}">
-                            <i class="fas fa-home"></i> الرئيسية
+                            <i class="fas fa-home"></i> Home
                         </a>
                     </li>
                     
@@ -58,31 +58,31 @@
                         {% if user.is_doctor %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'doctor_dashboard' %}">
-                                <i class="fas fa-user-md"></i> لوحة الطبيب
+                                <i class="fas fa-user-md"></i> Doctor Dashboard
                             </a>
                         </li>
                         {% elif user.is_patient %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'patient_dashboard' %}">
-                                <i class="fas fa-user"></i> لوحة المريض
+                                <i class="fas fa-user"></i> Patient Dashboard
                             </a>
                         </li>
                         {% endif %}
                         
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">
-                                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                                <i class="fas fa-sign-out-alt"></i> Logout
                             </a>
                         </li>
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}">
-                                <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                                <i class="fas fa-sign-in-alt"></i> Login
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link btn btn-primary text-white ms-2 px-3" href="{% url 'signup' %}">
-                                <i class="fas fa-user-plus"></i> إنشاء حساب
+                                <i class="fas fa-user-plus"></i> Sign Up
                             </a>
                         </li>
                     {% endif %}
@@ -91,32 +91,32 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- Main Content Area -->
     <main>
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
+    <!-- Footer Section -->
     <footer class="footer bg-dark text-white mt-5">
         <div class="container py-4">
             <div class="row">
                 <div class="col-md-4 mb-3">
                     <img src="{% static 'images/logo-Medicare.jpg' %}" alt="MediCare Logo" height="60" class="mb-3">
                     <h5 class="fw-bold mb-3">MediCare Platform</h5>
-                    <p class="text-white-50">منصة شاملة لإدارة الأدوية والوصفات الطبية</p>
+                    <p class="text-white-50">Comprehensive platform for medication and prescription management</p>
                 </div>
                 
                 <div class="col-md-4 mb-3">
-                    <h6 class="fw-bold mb-3">روابط سريعة</h6>
+                    <h6 class="fw-bold mb-3">Quick Links</h6>
                     <ul class="list-unstyled">
-                        <li><a href="{% url 'home' %}" class="text-white-50 text-decoration-none">الرئيسية</a></li>
-                        <li><a href="{% url 'admin:index' %}" class="text-white-50 text-decoration-none">لوحة التحكم</a></li>
-                        <li><a href="{% url 'login' %}" class="text-white-50 text-decoration-none">تسجيل الدخول</a></li>
+                        <li><a href="{% url 'home' %}" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li><a href="{% url 'admin:index' %}" class="text-white-50 text-decoration-none">Admin Panel</a></li>
+                        <li><a href="{% url 'login' %}" class="text-white-50 text-decoration-none">Login</a></li>
                     </ul>
                 </div>
                 
                 <div class="col-md-4 mb-3">
-                    <h6 class="fw-bold mb-3">تواصل معنا</h6>
+                    <h6 class="fw-bold mb-3">Contact Us</h6>
                     <p class="text-white-50">
                         <i class="fab fa-github"></i> 
                         <a href="https://github.com/Meriem-sh/MediCare-Platforme" target="_blank" class="text-white-50">
@@ -130,13 +130,13 @@
             
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <p class="mb-0 text-white-50">&copy; 2026 MediCare Platform. جميع الحقوق محفوظة.</p>
+                    <p class="mb-0 text-white-50">&copy; 2026 MediCare Platform. All rights reserved.</p>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap JavaScript Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     {% block extra_js %}{% endblock %}

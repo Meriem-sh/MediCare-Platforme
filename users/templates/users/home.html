@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}MediCare - الصفحة الرئيسية{% endblock %}
+{% block title %}MediCare - Home{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -239,14 +239,14 @@
     <div class="container">
         <div class="row align-items-center hero-content">
             <div class="col-lg-6 text-center text-lg-start">
-                <h1 class="hero-title">مرحباً بك في MediCare</h1>
-                <p class="hero-subtitle">منصة شاملة لإدارة الأدوية والوصفات الطبية بين الأطباء والمرضى</p>
+                <h1 class="hero-title">Welcome to MediCare</h1>
+                <p class="hero-subtitle">Comprehensive platform for medication and prescription management between doctors and patients</p>
                 <div class="d-flex gap-3 justify-content-center justify-content-lg-start flex-wrap">
                     <a href="{% url 'signup' %}" class="btn btn-light btn-lg px-5 shadow">
-                        <i class="fas fa-user-plus me-2"></i> إنشاء حساب جديد
+                        <i class="fas fa-user-plus me-2"></i> Create New Account
                     </a>
                     <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg px-5">
-                        <i class="fas fa-sign-in-alt me-2"></i> تسجيل الدخول
+                        <i class="fas fa-sign-in-alt me-2"></i> Login
                     </a>
                 </div>
             </div>
@@ -261,7 +261,7 @@
 <section class="py-5">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="section-title">مميزات المنصة</h2>
+            <h2 class="section-title">Platform Features</h2>
         </div>
         
         <div class="row g-4">
@@ -271,14 +271,14 @@
                     <div class="feature-icon">
                         <i class="fas fa-user-injured"></i>
                     </div>
-                    <h3>للمرضى</h3>
+                    <h3>For Patients</h3>
                     <p>
-                        تتبع الوصفات الطبية، استقبال التذكيرات، والتوجيه إلى الاختصاصي المناسب بناءً على حالتك المرضية.
+                        Track your prescriptions, receive reminders, and get directed to the right specialist based on your disease.
                     </p>
                     <ul class="list-unstyled text-start mt-3">
-                        <li><i class="fas fa-check text-success me-2"></i> تتبع الوصفات الطبية</li>
-                        <li><i class="fas fa-check text-success me-2"></i> تذكيرات الأدوية</li>
-                        <li><i class="fas fa-check text-success me-2"></i> توجيه للاختصاصي</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Track prescriptions</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Medication reminders</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Specialist routing</li>
                     </ul>
                 </div>
             </div>
@@ -289,14 +289,14 @@
                     <div class="feature-icon">
                         <i class="fas fa-user-md"></i>
                     </div>
-                    <h3>للأطباء</h3>
+                    <h3>For Doctors</h3>
                     <p>
-                        إدارة علاجات المرضى، مراقبة الالتزام بالعلاج، وتنظيم الأدوية في لوحة تحكم واضحة وآمنة.
+                        Manage patient treatments, monitor adherence, and organize medications in a clear, secure dashboard.
                     </p>
                     <ul class="list-unstyled text-start mt-3">
-                        <li><i class="fas fa-check text-success me-2"></i> إدارة العلاجات</li>
-                        <li><i class="fas fa-check text-success me-2"></i> متابعة الالتزام</li>
-                        <li><i class="fas fa-check text-success me-2"></i> لوحة تحكم آمنة</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Treatment management</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Adherence monitoring</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Secure dashboard</li>
                     </ul>
                 </div>
             </div>
@@ -307,14 +307,14 @@
                     <div class="feature-icon">
                         <i class="fas fa-dna"></i>
                     </div>
-                    <h3>للأمراض النادرة</h3>
+                    <h3>For Rare Diseases</h3>
                     <p>
-                        دعم مرضى الأمراض النادرة باستخدام أكواد Orpha، توجيه الاختصاصيين، واتخاذ قرارات دوائية أكثر أماناً.
+                        Support for rare disease patients using Orpha codes, specialist routing, and safer medication decisions.
                     </p>
                     <ul class="list-unstyled text-start mt-3">
-                        <li><i class="fas fa-check text-success me-2"></i> أكواد Orpha</li>
-                        <li><i class="fas fa-check text-success me-2"></i> توجيه متخصص</li>
-                        <li><i class="fas fa-check text-success me-2"></i> قرارات آمنة</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Orpha codes</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Specialist routing</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Safe decisions</li>
                     </ul>
                 </div>
             </div>
@@ -326,7 +326,7 @@
 <section class="login-section">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="section-title">ابدأ الآن</h2>
+            <h2 class="section-title">Get Started</h2>
         </div>
         
         <div class="row g-4">
@@ -336,10 +336,10 @@
                     <div class="login-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3 class="mb-3">تسجيل دخول المدير</h3>
-                    <p class="text-muted mb-4">الوصول الكامل لإدارة المنصة</p>
+                    <h3 class="mb-3">Admin Login</h3>
+                    <p class="text-muted mb-4">Full access to manage the platform</p>
                     <a href="{% url 'admin:index' %}" class="btn btn-admin btn-custom w-100">
-                        <i class="fas fa-lock me-2"></i> دخول المدير
+                        <i class="fas fa-lock me-2"></i> Admin Access
                     </a>
                 </div>
             </div>
@@ -350,13 +350,13 @@
                     <div class="login-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3 class="mb-3">تسجيل دخول المستخدم</h3>
-                    <p class="text-muted mb-4">للأطباء والمرضى</p>
+                    <h3 class="mb-3">User Login</h3>
+                    <p class="text-muted mb-4">For doctors and patients</p>
                     <a href="{% url 'login' %}" class="btn btn-user btn-custom w-100 mb-3">
-                        <i class="fas fa-sign-in-alt me-2"></i> تسجيل الدخول
+                        <i class="fas fa-sign-in-alt me-2"></i> Login
                     </a>
                     <a href="{% url 'password_reset' %}" class="text-decoration-none small">
-                        <i class="fas fa-key me-1"></i> نسيت كلمة المرور؟
+                        <i class="fas fa-key me-1"></i> Forgot password?
                     </a>
                 </div>
             </div>
@@ -367,10 +367,10 @@
                     <div class="login-icon">
                         <i class="fas fa-user-plus"></i>
                     </div>
-                    <h3 class="mb-3">حساب جديد</h3>
-                    <p class="text-muted mb-4">انضم إلى منصة MediCare</p>
+                    <h3 class="mb-3">New Account</h3>
+                    <p class="text-muted mb-4">Join MediCare platform</p>
                     <a href="{% url 'signup' %}" class="btn btn-signup btn-custom w-100">
-                        <i class="fas fa-user-plus me-2"></i> إنشاء حساب
+                        <i class="fas fa-user-plus me-2"></i> Sign Up
                     </a>
                 </div>
             </div>
@@ -383,10 +383,10 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <h2 class="fw-bold mb-4" style="color: #1e3c72;">حول MediCare</h2>
+                <h2 class="fw-bold mb-4" style="color: #1e3c72;">About MediCare</h2>
                 <p class="lead text-muted">
-                    MediCare هي منصة ويب مصممة لتحسين التواصل بين المرضى والأطباء، 
-                    تقليل أخطاء الأدوية، وتوفير دعم أذكى للأمراض المزمنة والنادرة.
+                    MediCare is a web platform designed to improve communication between patients and doctors, 
+                    reduce medication errors, and provide smarter support for chronic and rare diseases.
                 </p>
                 <div class="row mt-4">
                     <div class="col-6">
@@ -395,8 +395,8 @@
                                 <i class="fas fa-check"></i>
                             </div>
                             <div>
-                                <h5 class="mb-0">آمن وموثوق</h5>
-                                <small class="text-muted">حماية بياناتك</small>
+                                <h5 class="mb-0">Safe & Secure</h5>
+                                <small class="text-muted">Data protection</small>
                             </div>
                         </div>
                     </div>
@@ -406,8 +406,8 @@
                                 <i class="fas fa-mobile-alt"></i>
                             </div>
                             <div>
-                                <h5 class="mb-0">سهل الاستخدام</h5>
-                                <small class="text-muted">واجهة بسيطة</small>
+                                <h5 class="mb-0">Easy to Use</h5>
+                                <small class="text-muted">Simple interface</small>
                             </div>
                         </div>
                     </div>
