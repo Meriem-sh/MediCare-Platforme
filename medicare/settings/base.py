@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -27,14 +26,17 @@ SECRET_KEY = 'ka+xr)3pcq14nl!usr+3)ag834_w)-)yg=s-#pt0^5=^oac7sc'
 
 ALLOWED_HOSTS = []
 
-
-# Added 
+# ===================================
+# Custom User Model & Authentication
+# ===================================
 AUTH_USER_MODEL = 'users.CustomUser'
-LOGIN_REDIRECT_URL = '/users/dashboard/'
 
+# Redirect URLs after login/logout
+LOGIN_REDIRECT_URL = 'dashboard_redirect'  # ✅ Fixed!
+LOGOUT_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -79,7 +81,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'medicare.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
@@ -90,7 +91,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -110,18 +110,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -139,13 +134,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# ===================================
+# Email Configuration
+# ===================================
 # For the email part: emails are printed in the terminal, not sent.
 from decouple import config
 
@@ -156,11 +152,12 @@ EMAIL_BACKEND = config(
 
 DEFAULT_FROM_EMAIL = config(
     'DEFAULT_FROM_EMAIL',
-    default='Medicare <no-reply@medicare.test>'
+    default='Medicare <noreply@medicare.com>'
 )
 
-
-# Redis Cache - Default configuration
+# ===================================
+# Cache Configuration (Redis)
+# ===================================
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
@@ -168,7 +165,9 @@ CACHES = {
     }
 }
 
-# Django Channels - Default configuration
+# ===================================
+# Django Channels Configuration
+# ===================================
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
