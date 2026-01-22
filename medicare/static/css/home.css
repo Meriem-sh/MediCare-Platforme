@@ -1,100 +1,224 @@
-body {
-    margin: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #f5f7fb;
-    color: #1f2933;
+/* ========================================
+   HOME PAGE SPECIFIC STYLES
+   ======================================== */
+
+/* =========================
+   Hero Section
+   ========================= */
+.hero-section {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7db9e8 100%);
+    color: white;
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
 }
 
-.hero {
-    background: linear-gradient(135deg, #2563eb, #728eec);
-    color: white;
-    padding: 4rem 1.5rem;
-    text-align: center;
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 .hero-content {
-    max-width: 800px;
-    margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
-.hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    animation: fadeInUp 0.8s ease;
 }
 
-.hero h1 span {
-    font-weight: 800;
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    opacity: 0.95;
+    animation: fadeInUp 1s ease;
 }
 
-.tagline {
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
+.hero-logo {
+    max-width: 300px;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
 }
 
-.hero-actions {
+/* =========================
+   Feature Cards
+   ========================= */
+.feature-card {
+    background: white;
+    border-radius: 15px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+    border: 2px solid transparent;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    border-color: #2a5298;
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    border-radius: 50%;
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
+    margin: 0 auto 25px;
+    font-size: 2rem;
+    color: white;
 }
 
-.btn {
-    padding: 0.8rem 1.6rem;
-    border-radius: 999px;
-    text-decoration: none;
+.feature-card h3 {
+    font-size: 1.5rem;
     font-weight: 600;
+    margin-bottom: 15px;
+    color: #1e3c72;
+}
+
+.feature-card p {
+    color: #6c757d;
+    line-height: 1.8;
+}
+
+/* =========================
+   Login Section
+   ========================= */
+.login-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.login-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.login-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 45px rgba(0,0,0,0.2);
+}
+
+.login-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    font-size: 2.5rem;
+    color: white;
+}
+
+.admin-card .login-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.user-card .login-icon {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.signup-card .login-icon {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.btn-admin {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
     border: none;
+}
+
+.btn-admin:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-user {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    border: none;
+}
+
+.btn-user:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(240, 147, 251, 0.4);
+}
+
+.btn-signup {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    border: none;
+}
+
+.btn-signup:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4);
+}
+
+/* =========================
+   Section Titles
+   ========================= */
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 60px;
+    color: #1e3c72;
+    position: relative;
     display: inline-block;
 }
 
-.btn.primary {
-    background: white;
-    color: #1e40af;
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    border-radius: 2px;
 }
 
-.btn.secondary {
-    background: transparent;
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.7);
-}
-
-.small-text {
-    font-size: 0.9rem;
-    opacity: 0.9;
-}
-
-.sections {
-    max-width: 1000px;
-    margin: 2rem auto 3rem;
-    padding: 0 1.5rem;
-}
-
-.cards {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    margin-bottom: 2.5rem;
-}
-
-.card {
-    background: white;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: 0 12px 25px rgba(15, 23, 42, 0.08);
-}
-
-.card h2 {
-    margin-top: 0;
-}
-
-.about h2 {
-    margin-bottom: 0.5rem;
-}
-
-.footer {
-    text-align: center;
-    padding: 1rem 0;
-    font-size: 0.85rem;
-    color: #6b7280;
+/* =========================
+   Responsive Design
+   ========================= */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .hero-logo {
+        max-width: 200px;
+    }
+    
+    .feature-card {
+        padding: 30px 20px;
+    }
+    
+    .login-card {
+        padding: 30px 20px;
+    }
 }
