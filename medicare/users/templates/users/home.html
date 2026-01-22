@@ -1,77 +1,417 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Medicare – Welcome</title>
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
-</head>
-<body>
-<header class="hero">
-    <div class="hero-content">
-        <h1>Welcome to <span>Medicare</span></h1>
-        <p class="tagline">
-            A smart platform connecting patients and doctors, with better follow-up and safe medication management.
-        </p>
+{% block title %}MediCare - الصفحة الرئيسية{% endblock %}
 
-        <div class="hero-actions">
-            <!-- Login for doctors & patients -->
-            <a href="{% url 'login' %}" class="btn primary">
-                Login as Doctor / Patient
-            </a>
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7db9e8 100%);
+        color: white;
+        padding: 100px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        animation: fadeInUp 0.8s ease;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+        opacity: 0.95;
+        animation: fadeInUp 1s ease;
+    }
+    
+    .hero-logo {
+        max-width: 300px;
+        animation: float 3s ease-in-out infinite;
+        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Features Cards */
+    .feature-card {
+        background: white;
+        border-radius: 15px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 2px solid transparent;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        border-color: #2a5298;
+    }
+    
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        font-size: 2rem;
+        color: white;
+    }
+    
+    .feature-card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #1e3c72;
+    }
+    
+    .feature-card p {
+        color: #6c757d;
+        line-height: 1.8;
+    }
+    
+    /* Login Cards */
+    .login-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+    
+    .login-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    
+    .login-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 45px rgba(0,0,0,0.2);
+    }
+    
+    .login-icon {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        font-size: 2.5rem;
+        color: white;
+    }
+    
+    .admin-card .login-icon {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .user-card .login-icon {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+    
+    .signup-card .login-icon {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    
+    .btn-custom {
+        padding: 12px 40px;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-admin {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+    }
+    
+    .btn-admin:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-user {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        border: none;
+    }
+    
+    .btn-user:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 20px rgba(240, 147, 251, 0.4);
+    }
+    
+    .btn-signup {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        border: none;
+    }
+    
+    .btn-signup:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4);
+    }
+    
+    /* Section Title */
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 60px;
+        color: #1e3c72;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        border-radius: 2px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+{% endblock %}
 
-            <!-- Sign up -->
-            <a href="{% url 'signup' %}" class="btn secondary">
-                Create an Account
-            </a>
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center hero-content">
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="hero-title">مرحباً بك في MediCare</h1>
+                <p class="hero-subtitle">منصة شاملة لإدارة الأدوية والوصفات الطبية بين الأطباء والمرضى</p>
+                <div class="d-flex gap-3 justify-content-center justify-content-lg-start flex-wrap">
+                    <a href="{% url 'signup' %}" class="btn btn-light btn-lg px-5 shadow">
+                        <i class="fas fa-user-plus me-2"></i> إنشاء حساب جديد
+                    </a>
+                    <a href="{% url 'user-login' %}" class="btn btn-outline-light btn-lg px-5">
+                        <i class="fas fa-sign-in-alt me-2"></i> تسجيل الدخول
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center mt-5 mt-lg-0">
+                <img src="{% static 'images/logo-Medicare.jpg' %}" alt="MediCare Logo" class="hero-logo img-fluid">
+            </div>
         </div>
-
-        <p class="small-text">
-            Are you an administrator?  
-            <a href="{% url 'admin:index' %}">Go to Admin Portal</a>
-        </p>
     </div>
-</header>
+</section>
 
-<main class="sections">
-    <section class="cards">
-        <div class="card">
-            <h2>For Patients</h2>
-            <p>
-                Track your prescriptions, receive reminders, and get directed to the right specialist
-                based on your disease.
-            </p>
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">مميزات المنصة</h2>
         </div>
+        
+        <div class="row g-4">
+            <!-- For Patients -->
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-injured"></i>
+                    </div>
+                    <h3>للمرضى</h3>
+                    <p>
+                        تتبع الوصفات الطبية، استقبال التذكيرات، والتوجيه إلى الاختصاصي المناسب بناءً على حالتك المرضية.
+                    </p>
+                    <ul class="list-unstyled text-start mt-3">
+                        <li><i class="fas fa-check text-success me-2"></i> تتبع الوصفات الطبية</li>
+                        <li><i class="fas fa-check text-success me-2"></i> تذكيرات الأدوية</li>
+                        <li><i class="fas fa-check text-success me-2"></i> توجيه للاختصاصي</li>
+                    </ul>
+                </div>
+            </div>
 
-        <div class="card">
-            <h2>For Doctors</h2>
-            <p>
-                Manage patient treatments, monitor adherence, and organize medications in a clear,
-                secure dashboard.
-            </p>
+            <!-- For Doctors -->
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>للأطباء</h3>
+                    <p>
+                        إدارة علاجات المرضى، مراقبة الالتزام بالعلاج، وتنظيم الأدوية في لوحة تحكم واضحة وآمنة.
+                    </p>
+                    <ul class="list-unstyled text-start mt-3">
+                        <li><i class="fas fa-check text-success me-2"></i> إدارة العلاجات</li>
+                        <li><i class="fas fa-check text-success me-2"></i> متابعة الالتزام</li>
+                        <li><i class="fas fa-check text-success me-2"></i> لوحة تحكم آمنة</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- For Rare Diseases -->
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <h3>للأمراض النادرة</h3>
+                    <p>
+                        دعم مرضى الأمراض النادرة باستخدام أكواد Orpha، توجيه الاختصاصيين، واتخاذ قرارات دوائية أكثر أماناً.
+                    </p>
+                    <ul class="list-unstyled text-start mt-3">
+                        <li><i class="fas fa-check text-success me-2"></i> أكواد Orpha</li>
+                        <li><i class="fas fa-check text-success me-2"></i> توجيه متخصص</li>
+                        <li><i class="fas fa-check text-success me-2"></i> قرارات آمنة</li>
+                    </ul>
+                </div>
+            </div>
         </div>
+    </div>
+</section>
 
-        <div class="card">
-            <h2>For Rare Diseases</h2>
-            <p>
-                Support for rare disease patients using Orpha codes, specialist routing, and safer
-                medication decisions.
-            </p>
+<!-- Login Section -->
+<section class="login-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">ابدأ الآن</h2>
         </div>
-    </section>
+        
+        <div class="row g-4">
+            <!-- Admin Login -->
+            <div class="col-md-4">
+                <div class="login-card admin-card">
+                    <div class="login-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="mb-3">تسجيل دخول المدير</h3>
+                    <p class="text-muted mb-4">الوصول الكامل لإدارة المنصة</p>
+                    <a href="{% url 'admin:index' %}" class="btn btn-admin btn-custom w-100">
+                        <i class="fas fa-lock me-2"></i> دخول المدير
+                    </a>
+                </div>
+            </div>
 
-    <section class="about">
-        <h2>About Medicare</h2>
-        <p>
-            Medicare is a web platform designed to improve communication between patients and doctors,
-            reduce medication errors, and provide smarter support for chronic and rare diseases.
-        </p>
-    </section>
-</main>
+            <!-- User Login -->
+            <div class="col-md-4">
+                <div class="login-card user-card">
+                    <div class="login-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="mb-3">تسجيل دخول المستخدم</h3>
+                    <p class="text-muted mb-4">للأطباء والمرضى</p>
+                    <a href="{% url 'user-login' %}" class="btn btn-user btn-custom w-100 mb-3">
+                        <i class="fas fa-sign-in-alt me-2"></i> تسجيل الدخول
+                    </a>
+                    <a href="{% url 'password_reset' %}" class="text-decoration-none small">
+                        <i class="fas fa-key me-1"></i> نسيت كلمة المرور؟
+                    </a>
+                </div>
+            </div>
 
-<footer class="footer">
-    <p>&copy; {{ now|date:"Y" }} Medicare. All rights reserved.</p>
-</footer>
-</body>
-</html>
+            <!-- Signup -->
+            <div class="col-md-4">
+                <div class="login-card signup-card">
+                    <div class="login-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3 class="mb-3">حساب جديد</h3>
+                    <p class="text-muted mb-4">انضم إلى منصة MediCare</p>
+                    <a href="{% url 'signup' %}" class="btn btn-signup btn-custom w-100">
+                        <i class="fas fa-user-plus me-2"></i> إنشاء حساب
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="fw-bold mb-4" style="color: #1e3c72;">حول MediCare</h2>
+                <p class="lead text-muted">
+                    MediCare هي منصة ويب مصممة لتحسين التواصل بين المرضى والأطباء، 
+                    تقليل أخطاء الأدوية، وتوفير دعم أذكى للأمراض المزمنة والنادرة.
+                </p>
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary text-white rounded-circle p-3 me-3">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">آمن وموثوق</h5>
+                                <small class="text-muted">حماية بياناتك</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-success text-white rounded-circle p-3 me-3">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">سهل الاستخدام</h5>
+                                <small class="text-muted">واجهة بسيطة</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="{% static 'images/logo-Medicare.jpg' %}" alt="About MediCare" class="img-fluid" style="max-width: 400px;">
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
