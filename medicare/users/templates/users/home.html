@@ -5,7 +5,7 @@
 
 {% block extra_css %}
 <style>
-    /* Hero Section */
+    /* Hero Section Styles */
     .hero-section {
         background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7db9e8 100%);
         color: white;
@@ -50,6 +50,7 @@
         filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
     }
     
+    /* Animations */
     @keyframes float {
         0%, 100% { transform: translateY(0px); }
         50% { transform: translateY(-20px); }
@@ -66,7 +67,7 @@
         }
     }
     
-    /* Features Cards */
+    /* Feature Cards */
     .feature-card {
         background: white;
         border-radius: 15px;
@@ -109,7 +110,7 @@
         line-height: 1.8;
     }
     
-    /* Login Cards */
+    /* Login Section */
     .login-section {
         padding: 80px 0;
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -142,18 +143,22 @@
         color: white;
     }
     
+    /* Admin Card Gradient */
     .admin-card .login-icon {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
     
+    /* User Card Gradient */
     .user-card .login-icon {
         background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     }
     
+    /* Signup Card Gradient */
     .signup-card .login-icon {
         background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     }
     
+    /* Custom Buttons */
     .btn-custom {
         padding: 12px 40px;
         font-weight: 600;
@@ -194,7 +199,7 @@
         box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4);
     }
     
-    /* Section Title */
+    /* Section Titles */
     .section-title {
         font-size: 2.5rem;
         font-weight: 700;
@@ -216,7 +221,7 @@
         border-radius: 2px;
     }
     
-    /* Responsive */
+    /* Responsive Design */
     @media (max-width: 768px) {
         .hero-title {
             font-size: 2rem;
@@ -240,7 +245,7 @@
                     <a href="{% url 'signup' %}" class="btn btn-light btn-lg px-5 shadow">
                         <i class="fas fa-user-plus me-2"></i> إنشاء حساب جديد
                     </a>
-                    <a href="{% url 'user-login' %}" class="btn btn-outline-light btn-lg px-5">
+                    <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg px-5">
                         <i class="fas fa-sign-in-alt me-2"></i> تسجيل الدخول
                     </a>
                 </div>
@@ -347,7 +352,7 @@
                     </div>
                     <h3 class="mb-3">تسجيل دخول المستخدم</h3>
                     <p class="text-muted mb-4">للأطباء والمرضى</p>
-                    <a href="{% url 'user-login' %}" class="btn btn-user btn-custom w-100 mb-3">
+                    <a href="{% url 'login' %}" class="btn btn-user btn-custom w-100 mb-3">
                         <i class="fas fa-sign-in-alt me-2"></i> تسجيل الدخول
                     </a>
                     <a href="{% url 'password_reset' %}" class="text-decoration-none small">

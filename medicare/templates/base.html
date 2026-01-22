@@ -57,13 +57,13 @@
                     {% if user.is_authenticated %}
                         {% if user.is_doctor %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'doctor-dashboard' %}">
+                            <a class="nav-link" href="{% url 'doctor_dashboard' %}">
                                 <i class="fas fa-user-md"></i> لوحة الطبيب
                             </a>
                         </li>
                         {% elif user.is_patient %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'patient-dashboard' %}">
+                            <a class="nav-link" href="{% url 'patient_dashboard' %}">
                                 <i class="fas fa-user"></i> لوحة المريض
                             </a>
                         </li>
@@ -76,7 +76,7 @@
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user-login' %}">
+                            <a class="nav-link" href="{% url 'login' %}">
                                 <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
                             </a>
                         </li>
@@ -111,7 +111,7 @@
                     <ul class="list-unstyled">
                         <li><a href="{% url 'home' %}" class="text-white-50 text-decoration-none">الرئيسية</a></li>
                         <li><a href="{% url 'admin:index' %}" class="text-white-50 text-decoration-none">لوحة التحكم</a></li>
-                        <li><a href="{% url 'user-login' %}" class="text-white-50 text-decoration-none">تسجيل الدخول</a></li>
+                        <li><a href="{% url 'login' %}" class="text-white-50 text-decoration-none">تسجيل الدخول</a></li>
                     </ul>
                 </div>
                 
