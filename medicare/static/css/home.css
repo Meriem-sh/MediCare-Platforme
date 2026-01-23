@@ -2,6 +2,7 @@
    HOME PAGE SPECIFIC STYLES
    ======================================== */
 
+
 /* =========================
    Hero Section
    ========================= */
@@ -13,6 +14,7 @@
     overflow: hidden;
 }
 
+
 .hero-section::before {
     content: '';
     position: absolute;
@@ -23,10 +25,12 @@
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
+
 .hero-content {
     position: relative;
     z-index: 1;
 }
+
 
 .hero-title {
     font-size: 3.5rem;
@@ -36,6 +40,7 @@
     animation: fadeInUp 0.8s ease;
 }
 
+
 .hero-subtitle {
     font-size: 1.5rem;
     margin-bottom: 30px;
@@ -43,11 +48,13 @@
     animation: fadeInUp 1s ease;
 }
 
+
 .hero-logo {
     max-width: 300px;
     animation: float 3s ease-in-out infinite;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
 }
+
 
 /* =========================
    Feature Cards
@@ -63,11 +70,13 @@
     border: 2px solid transparent;
 }
 
+
 .feature-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 40px rgba(0,0,0,0.2);
     border-color: #2a5298;
 }
+
 
 .feature-icon {
     width: 80px;
@@ -82,6 +91,7 @@
     color: white;
 }
 
+
 .feature-card h3 {
     font-size: 1.5rem;
     font-weight: 600;
@@ -89,10 +99,12 @@
     color: #1e3c72;
 }
 
+
 .feature-card p {
     color: #6c757d;
     line-height: 1.8;
 }
+
 
 /* =========================
    Login Section
@@ -101,6 +113,7 @@
     padding: 80px 0;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
+
 
 .login-card {
     background: white;
@@ -112,10 +125,12 @@
     height: 100%;
 }
 
+
 .login-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 45px rgba(0,0,0,0.2);
 }
+
 
 .login-icon {
     width: 100px;
@@ -129,17 +144,21 @@
     color: white;
 }
 
+
 .admin-card .login-icon {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
+
 
 .user-card .login-icon {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
 }
 
+
 .signup-card .login-icon {
     background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
 }
+
 
 .btn-admin {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -147,10 +166,12 @@
     border: none;
 }
 
+
 .btn-admin:hover {
     transform: scale(1.05);
     box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
 }
+
 
 .btn-user {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
@@ -158,10 +179,12 @@
     border: none;
 }
 
+
 .btn-user:hover {
     transform: scale(1.05);
     box-shadow: 0 5px 20px rgba(240, 147, 251, 0.4);
 }
+
 
 .btn-signup {
     background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
@@ -169,10 +192,12 @@
     border: none;
 }
 
+
 .btn-signup:hover {
     transform: scale(1.05);
     box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4);
 }
+
 
 /* =========================
    Section Titles
@@ -186,6 +211,7 @@
     display: inline-block;
 }
 
+
 .section-title::after {
     content: '';
     position: absolute;
@@ -197,6 +223,7 @@
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     border-radius: 2px;
 }
+
 
 /* =========================
    Responsive Design
@@ -215,26 +242,4 @@
     }
     
     .feature-card {
-        padding: 30px 20px;
-    }
-    
-    .login-card {
-        padding: 30px 20px;
-    }
-}
-
-/* =========================
-   Welcome Message for Logged Users
-   ========================= */
-.welcome-message h3 {
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    animation: fadeInUp 0.8s ease;
-}
-
-.text-white-75 {
-    opacity: 0.9;
-}
-
-.welcome-message .btn {
-    animation: fadeInUp 1s ease;
-}
+        pad
