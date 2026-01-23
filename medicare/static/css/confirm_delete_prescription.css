@@ -1,6 +1,10 @@
+/* ========================================
+   DELETE PRESCRIPTION CONFIRMATION
+   ======================================== */
+
 /* Page layout */
 .delete-page {
-    min-height: 60vh;
+    min-height: calc(100vh - 200px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,24 +26,26 @@
 
 /* Icon */
 .delete-icon {
-    width: 42px;
-    height: 42px;
+    width: 70px;
+    height: 70px;
     border-radius: 999px;
-    border: 2px solid #dc2626;
-    color: #dc2626;
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 800;
-    font-size: 1.1rem;
-    margin: 0 auto 0.75rem;
+    font-size: 2rem;
+    margin: 0 auto 1rem;
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
 }
 
 /* Title & text */
 .delete-card h2 {
     margin-bottom: 0.5rem;
     font-size: 1.4rem;
-    color: #111827;
+    color: #dc2626;
+    font-weight: 700;
 }
 
 .delete-warning {
@@ -56,10 +62,17 @@
     text-align: left;
     margin-bottom: 1.5rem;
     font-size: 0.95rem;
+    border: 1px solid #e5e7eb;
 }
 
 .delete-details p {
     margin: 0.25rem 0;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.delete-details p:last-child {
+    border-bottom: none;
 }
 
 .delete-details .label {
@@ -86,6 +99,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 0.4rem;
+    font-weight: 600;
     transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
 }
 
@@ -101,6 +116,7 @@
 .delete-btn:hover {
     background: #b91c1c;
     transform: translateY(-1px);
+    color: #ffffff;
 }
 
 /* Secondary button */
@@ -114,6 +130,7 @@
 .cancel-btn:hover {
     background: #d1d5db;
     transform: translateY(-1px);
+    color: #111827;
 }
 
 /* Disabled state */
@@ -122,4 +139,19 @@
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .delete-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .delete-card form {
+        flex-direction: column-reverse;
+    }
+    
+    .btn {
+        width: 100%;
+    }
 }

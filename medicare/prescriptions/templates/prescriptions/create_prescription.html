@@ -1,36 +1,43 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Edit Prescription{% endblock %}
+{% block title %}Create Prescription - MediCare{% endblock %}
 
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/edit_prescription.css' %}">
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/prescription_form.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="edit-page">
-    <div class="edit-card">
-
-        <h2>Edit Prescription</h2>
-        <p class="patient-info">
-            Patient: <strong>{{ prescription.patient.username }}</strong>
-        </p>
-
-        <form method="post" id="edit-form">
+<div class="page-wrapper">
+    <div class="prescription-card">
+        <div class="card-header">
+            <h1><i class="fas fa-prescription me-2"></i> Create New Prescription</h1>
+            <p>Patient: <strong>{{ prescription.patient.username }}</strong></p>
+        </div>
+        
+        {% if form.errors %}
+        <div class="form-errors">
+            <strong>Please correct the following errors:</strong>
+            {{ form.errors }}
+        </div>
+        {% endif %}
+        
+        <form method="post" class="prescription-form">
             {% csrf_token %}
-            <div class="form-fields">
+            
+            <div class="form-grid">
                 {{ form.as_p }}
             </div>
-
-            <div class="edit-actions">
-                <button type="submit" class="btn btn-primary save-btn">Save changes</button>
-                <a href="{% url 'doctor_dashboard' %}" class="btn btn-secondary cancel-btn">Cancel</a>
+            
+            <div class="form-actions">
+                <a href="{% url 'doctor_dashboard' %}" class="btn secondary">
+                    <i class="fas fa-times me-2"></i> Cancel
+                </a>
+                <button type="submit" class="btn primary">
+                    <i class="fas fa-save me-2"></i> Save Prescription
+                </button>
             </div>
         </form>
-
     </div>
 </div>
-
-<link rel="stylesheet" href="{% static 'css/edit_prescription.css' %}">
-<script src="{% static 'js/edit_prescription.js' %}"></script>
 {% endblock %}

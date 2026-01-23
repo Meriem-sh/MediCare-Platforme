@@ -1,6 +1,10 @@
+/* ========================================
+   EDIT PRESCRIPTION PAGE
+   ======================================== */
+
 /* Page layout */
 .edit-page {
-    min-height: 60vh;
+    min-height: calc(100vh - 200px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,7 +15,8 @@
 /* Card */
 .edit-card {
     background: #fff;
-    width: 460px;
+    width: 100%;
+    max-width: 460px;
     padding: 2rem 2.2rem;
     border-radius: 1.2rem;
     box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
@@ -31,6 +36,10 @@
     margin-bottom: 0.8rem;
 }
 
+.edit-card h2 i {
+    color: #2563eb;
+}
+
 .patient-info {
     text-align: center;
     margin-bottom: 1.3rem;
@@ -41,6 +50,13 @@
 /* Form fields */
 .form-fields p {
     margin-bottom: 1rem;
+}
+
+.form-fields label {
+    font-weight: 600;
+    color: #1e3c72;
+    display: block;
+    margin-bottom: 0.4rem;
 }
 
 .form-fields input,
@@ -80,6 +96,9 @@
     text-decoration: none;
     font-weight: 600;
     transition: transform 0.12s ease, box-shadow 0.12s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
 }
 
 .btn-primary {
@@ -91,6 +110,7 @@
 .btn-primary:hover {
     background: #1e40af;
     transform: translateY(-1px);
+    color: white;
 }
 
 .btn-secondary {
@@ -101,6 +121,7 @@
 .btn-secondary:hover {
     background: #d1d5db;
     transform: translateY(-1px);
+    color: #111827;
 }
 
 /* Disabled state */
@@ -109,4 +130,19 @@
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .edit-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .edit-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
 }
