@@ -4,9 +4,10 @@
 {% block title %}{{ title }} | MediCare Admin{% endblock %}
 
 {% block branding %}
-<h1 id="site-name">
-    <a href="{% url 'admin:index' %}" style="color: #2c3e50; text-decoration: none; font-weight: bold;">
-        🏥 MediCare Admin
+<h1 id="site-name" style="display: flex; align-items: center;">
+    <a href="{% url 'admin:index' %}" style="color: #2c3e50; text-decoration: none; font-weight: bold; display: flex; align-items: center; gap: 10px;">
+        <img src="{% static 'images/logo-Medicare.jpg' %}" alt="MediCare" style="height: 35px;">
+        MediCare Admin
     </a>
 </h1>
 {% endblock %}
@@ -16,7 +17,12 @@
     <a href="{% url 'home' %}" style="color: white; margin-right: 20px; text-decoration: none;">🏠 Home</a>
     <a href="{% url 'admin:index' %}" style="color: white; margin-right: 20px; text-decoration: none;">📊 Dashboard</a>
     {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}" style="color: white; text-decoration: none;">🚪 Logout</a>
+        <form method="post" action="{% url 'logout' %}" style="display: inline; margin: 0;">
+            {% csrf_token %}
+            <button type="submit" style="background: none; border: none; color: white; cursor: pointer; font-size: inherit; padding: 0; text-decoration: none;">
+                🚪 Logout
+            </button>
+        </form>
     {% endif %}
 </div>
 {% endblock %}

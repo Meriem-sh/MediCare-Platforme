@@ -6,7 +6,10 @@
 {% block content %}
 <div style="min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
     <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 450px; width: 100%;">
-        <h2 style="text-align: center; color: #2c3e50; margin-bottom: 30px;">🏥 Login to MediCare</h2>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="{% static 'images/logo-Medicare.jpg' %}" alt="MediCare" style="height: 70px; margin-bottom: 15px;">
+            <h2 style="color: #2c3e50; margin: 0;">Login to MediCare</h2>
+        </div>
         
         {% if messages %}
             {% for message in messages %}

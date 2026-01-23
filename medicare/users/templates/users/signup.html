@@ -6,7 +6,10 @@
 {% block content %}
 <div style="min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
     <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 550px; width: 100%;">
-        <h2 style="text-align: center; color: #2c3e50; margin-bottom: 30px;">🏥 Create MediCare Account</h2>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="{% static 'images/logo-Medicare.jpg' %}" alt="MediCare" style="height: 70px; margin-bottom: 15px;">
+            <h2 style="color: #2c3e50; margin: 0;">Create MediCare Account</h2>
+        </div>
         
         {% if messages %}
             {% for message in messages %}
@@ -39,6 +42,14 @@
                 </div>
             </div>
             
+            <div>
+                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #34495e;">Phone:</label>
+                {{ form.phone }}
+                {% if form.phone.errors %}
+                    <span style="color: #c62828; font-size: 13px;">{{ form.phone.errors.0 }}</span>
+                {% endif %}
+            </div>
+            
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                 <div>
                     <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #34495e;">Password:</label>
@@ -58,18 +69,18 @@
             </div>
             
             <div>
-                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #34495e;">Role:</label>
-                {{ form.role }}
-                {% if form.role.errors %}
-                    <span style="color: #c62828; font-size: 13px;">{{ form.role.errors.0 }}</span>
-                {% endif %}
-            </div>
-            
-            <div id="disease-field" style="display: none;">
-                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #34495e;">Disease (for Patients):</label>
+                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #34495e;">Disease (if known):</label>
                 {{ form.disease }}
                 {% if form.disease.errors %}
                     <span style="color: #c62828; font-size: 13px;">{{ form.disease.errors.0 }}</span>
+                {% endif %}
+            </div>
+            
+            <div>
+                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #34495e;">Condition:</label>
+                {{ form.condition }}
+                {% if form.condition.errors %}
+                    <span style="color: #c62828; font-size: 13px;">{{ form.condition.errors.0 }}</span>
                 {% endif %}
             </div>
             
@@ -84,23 +95,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    // Show disease field only for patients
-    const roleField = document.getElementById('{{ form.role.id_for_label }}');
-    const diseaseField = document.getElementById('disease-field');
-    
-    roleField.addEventListener('change', function() {
-        if (this.value === 'patient') {
-            diseaseField.style.display = 'block';
-        } else {
-            diseaseField.style.display = 'none';
-        }
-    });
-    
-    // Check on page load
-    if (roleField.value === 'patient') {
-        diseaseField.style.display = 'block';
-    }
-</script>
 {% endblock %}
