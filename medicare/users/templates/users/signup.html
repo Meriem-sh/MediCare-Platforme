@@ -1,76 +1,76 @@
+{% extends "base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sign Up – Medicare</title>
-    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
-</head>
-<body>
-    <div class="auth-container">
-        <h2>Create a Patient Account</h2>
-        <p class="subtitle">
-            This account is for patients. Doctor accounts are created by the administrator.
-        </p>
+{% block title %}Sign Up - MediCare{% endblock %}
 
-        <form method="POST" class="auth-form">
-            {% csrf_token %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
 
-            {{ form.non_field_errors }}
+{% block content %}
+<div class="auth-container">
+    <h2>Create a Patient Account</h2>
+    <p class="subtitle">
+        This account is for patients. Doctor accounts are created by the administrator.
+    </p>
 
-            <div class="field">
-                {{ form.username.label_tag }}
-                {{ form.username }}
-                {{ form.username.errors }}
-            </div>
+    <form method="POST" class="auth-form">
+        {% csrf_token %}
 
-            <div class="field">
-                {{ form.email.label_tag }}
-                {{ form.email }}
-                {{ form.email.errors }}
-            </div>
+        {{ form.non_field_errors }}
 
-            <div class="field">
-                {{ form.phone.label_tag }}
-                {{ form.phone }}
-                {{ form.phone.errors }}
-            </div>
+        <div class="field">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            {{ form.username.errors }}
+        </div>
 
-            <div class="field">
-                {{ form.disease.label_tag }}
-                {{ form.disease }}
-                {{ form.disease.errors }}
-            </div>
+        <div class="field">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
 
-            <div class="field">
-                {{ form.condition.label_tag }}
-                {{ form.condition }}
-                {{ form.condition.errors }}
-            </div>
+        <div class="field">
+            {{ form.phone.label_tag }}
+            {{ form.phone }}
+            {{ form.phone.errors }}
+        </div>
 
-            <div class="field">
-                {{ form.password1.label_tag }}
-                {{ form.password1 }}
-                {{ form.password1.errors }}
-            </div>
+        <div class="field">
+            {{ form.disease.label_tag }}
+            {{ form.disease }}
+            {{ form.disease.errors }}
+        </div>
 
-            <div class="field">
-                {{ form.password2.label_tag }}
-                {{ form.password2 }}
-                {{ form.password2.errors }}
-            </div>
+        <div class="field">
+            {{ form.condition.label_tag }}
+            {{ form.condition }}
+            {{ form.condition.errors }}
+        </div>
 
-            <button type="submit" class="btn-primary">Sign Up</button>
-        </form>
+        <div class="field">
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+            {{ form.password1.errors }}
+        </div>
 
-        <p class="switch-link">
-            Already have an account?
-            <a href="{% url 'login' %}">Login here</a>
-        </p>
-    </div>
-    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
-    <script src="{% static 'js/signup.js' %}"></script>
+        <div class="field">
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+        </div>
 
-</body>
-</html>
+        <button type="submit" class="btn-primary">Sign Up</button>
+    </form>
+
+    <p class="switch-link">
+        Already have an account?
+        <a href="{% url 'login' %}">Login here</a>
+    </p>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/signup.js' %}"></script>
+{% endblock %}

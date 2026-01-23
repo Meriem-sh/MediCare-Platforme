@@ -1,14 +1,13 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Patient Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/patient_dashboard.css' %}">
-    <script defer src="{% static 'js/patient_dashboard.js' %}"></script>
-</head>
-<body>
 
+{% block title %}Patient Dashboard - MediCare{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/patient_dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
 <div class="patient-page">
 
     <header class="patient-header">
@@ -61,7 +60,6 @@
     {% endif %}
 </div>
 
-
     <!-- PRESCRIPTIONS -->
     <section class="card">
         <div class="card-header">
@@ -105,7 +103,7 @@
     <section class="card">
         <div class="card-header">
             <h2>Your active reminders</h2>
-            <p>Tap “Taken” or “Missed” when you take your dose.</p>
+            <p>Tap "Taken" or "Missed" when you take your dose.</p>
         </div>
 
         {% if reminders %}
@@ -138,23 +136,4 @@
         {% if dose_logs %}
             <ul class="history-list">
                 {% for log in dose_logs %}
-                    <li class="history-item" data-status="{{ log.status|lower }}">
-                        <span class="history-time">{{ log.logged_at }}</span>
-                        <span class="history-drug">{{ log.reminder.prescription.drug.name }}</span>
-                        <span class="history-status">{{ log.status }}</span>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="empty-text">No doses logged yet.</p>
-        {% endif %}
-    </section>
-
-</div>
-
-{% block extra_scripts %}
-<script src="{% static 'js/patient_reminders.js' %}"></script>
-{% endblock %}
-
-</body>
-</html>
+                    <li class="history-item" d

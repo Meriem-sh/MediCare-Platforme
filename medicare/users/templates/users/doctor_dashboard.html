@@ -1,15 +1,13 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Doctor Dashboard</title>
 
-    <link rel="stylesheet" href="{% static 'css/doctor_dashboard.css' %}">
-    <script defer src="{% static 'js/doctor_dashboard.js' %}"></script>
-</head>
+{% block title %}Doctor Dashboard - MediCare{% endblock %}
 
-<body>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/doctor_dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
 <div class="dashboard-container">
 
     <header class="top-header">
@@ -19,11 +17,9 @@
             <span class="small">({{ request.user.get_specialty_display }})</span>
         </p>
 
-
         <a href="{% url 'create_prescription' %}" class="btn primary">➕ Create Prescription</a>
         <a href="{% url 'doctor_adherence' %}" class="btn secondary">📊 View Adherence</a>
     </header>
-
 
     <!-- PATIENTS -->
     <section class="card">
@@ -73,14 +69,11 @@
                     </div>
                 </li>
 
-
             {% empty %}
                 <li class="empty">No prescriptions yet.</li>
             {% endfor %}
         </ul>
     </section>
-
-
 
     <!-- REMINDERS -->
     <section class="card">
@@ -101,7 +94,9 @@
         </ul>
     </section>
 
-
 </div>
-</body>
-</html>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/doctor_dashboard.js' %}"></script>
+{% endblock %}
