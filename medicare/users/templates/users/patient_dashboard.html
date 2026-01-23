@@ -10,9 +10,13 @@
 {% block content %}
 <div class="patient-page">
 
+    <div class="page-header-with-back">
+        <a href="{% url 'home' %}" class="back-button">Home</a>
+        <h1>🤒 Patient Dashboard</h1>
+    </div>
+
     <header class="patient-header">
         <div>
-            <h1>Patient Dashboard</h1>
             <p class="welcome-text">Welcome, {{ request.user.username }}!</p>
         </div>
 

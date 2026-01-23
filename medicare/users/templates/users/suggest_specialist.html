@@ -9,7 +9,9 @@
 
 {% block content %}
 <div class="specialist-container">
-    <h1>Suggested Specialists</h1>
+    <a href="{% url 'patient_dashboard' %}" class="back-button">Back to Dashboard</a>
+    
+    <h1>🔍 Suggested Specialists</h1>
 
     <div class="patient-info">
         <p>
@@ -27,15 +29,14 @@
     </div>
 
     {% if doctors %}
-        <h2>Available doctors</h2>
+        <h2>Available Doctors</h2>
         <ul class="doctors-list">
             {% for doctor in doctors %}
                 <li class="doctor-item">
                     <div class="doctor-info">
-                        <span class="doctor-name">Dr. {{ doctor.get_full_name|default:doctor.username }}</span>
+                        <span class="doctor-name">👨‍⚕️ Dr. {{ doctor.get_full_name|default:doctor.username }}</span>
                         <span class="doctor-specialty">— {{ doctor.get_specialty_display }}</span>
                     </div>
-                    <!-- you can add a button to "choose" or "send request" -->
                     <a href="{% url 'assign_doctor' doctor.id %}" class="btn btn-primary">Choose this doctor</a>
                 </li>
             {% endfor %}

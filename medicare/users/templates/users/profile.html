@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Profile - MediCare{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header-with-back">
+        <a href="{% if user.role == 'doctor' %}{% url 'doctor_dashboard' %}{% else %}{% url 'patient_dashboard' %}{% endif %}" class="back-button">
+            Back to Dashboard
+        </a>
+        <h1>👤 My Profile</h1>
+    </div>
+    
+    <div class="card profile-card">
+        <div class="profile-info">
+            <div class="info-item">
+                <label>Username</label>
+                <p>{{ user.username }}</p>
+            </div>
+            
+            <div class="info-item">
+                <label>Email</label>
+                <p>{{ user.email }}</p>
+            </div>
+            
+            <div class="info-item">
+                <label>Role</label>
+                <p>
+                    {% if user.role == 'doctor' %}👨‍⚕️ Doctor
+                    {% elif user.role == 'patient' %}🤒 Patient
+                    {% else %}👤 {{ user.role|title }}{% endif %}
+                </p>
+            </div>
+            
+            {% if user.role == 'patient' %}
+            <div class="info-item">
+                <label>Disease</label>
+                <p>{{ user.disease.name|default:"Not specified" }}</p>
+            </div>
+            
+            <div class="info-item">
+                <label>Assigned Doctor</label>
+                <p>
+                    {% if user.assigned_doctor %}
+                        Dr. {{ user.assigned_doctor.username }}
+                    {% else %}
+                        Not assigned
+                    {% endif %}
+                </p>
+            </div>
+            {% endif %}
+            
+            <div class="info-item">
+                <label>Account Created</label>
+                <p>{{ user.date_joined|date:"F d, Y" }}</p>
+            </div>
+        </div>
+        
+        <div class="profile-actions">
+            <a href="{% url 'profile_edit' %}" class="btn btn-primary">✏️ Edit Profile</a>
+            <a href="{% url 'settings' %}" class="btn">⚙️ Settings</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

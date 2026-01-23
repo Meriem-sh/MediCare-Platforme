@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Settings - MediCare{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header-with-back">
+        <a href="{% url 'profile' %}" class="back-button">Back to Profile</a>
+        <h1>⚙️ Settings</h1>
+    </div>
+    
+    <div class="card form-card">
+        <h2>🔒 Change Password</h2>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-error{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="post" class="form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="old_password">Current Password:</label>
+                <input type="password" name="old_password" id="old_password" required class="form-input">
+            </div>
+            
+            <div class="form-group">
+                <label for="new_password1">New Password:</label>
+                <input type="password" name="new_password1" id="new_password1" required class="form-input">
+            </div>
+            
+            <div class="form-group">
+                <label for="new_password2">Confirm New Password:</label>
+                <input type="password" name="new_password2" id="new_password2" required class="form-input">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">🔄 Update Password</button>
+        </form>
+    </div>
+    
+    <div class="card danger-zone">
+        <h2>⚠️ Danger Zone</h2>
+        <p>Deleting your account is permanent and cannot be undone.</p>
+        <button onclick="confirmDelete()" class="btn btn-danger">
+            🗑️ Delete Account
+        </button>
+    </div>
+</div>
+
+<script>
+function confirmDelete() {
+    if (confirm('Are you sure you want to delete your account? This action cannot be undone!')) {
+        // TODO: Add delete account functionality
+        alert('Account deletion feature will be implemented soon.');
+    }
+}
+</script>
+{% endblock %}

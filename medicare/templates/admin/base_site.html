@@ -1,56 +1,59 @@
 {% extends "admin/base.html" %}
 {% load static %}
 
-{% block title %}MediCare Admin{% endblock %}
-
-{% block extrastyle %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{% static 'css/custom_admin.css' %}">
-  <style>
-    /* Quick style for logo */
-    .admin-brand {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem;
-    }
-    .brand-logo img {
-      height: 50px;
-      border-radius: 8px;
-    }
-    .brand-text h1 {
-      margin: 0;
-      font-size: 1.4rem;
-      color: #1e3c72;
-    }
-    .brand-text p {
-      margin: 0;
-      font-size: 0.9rem;
-      color: #64748b;
-    }
-  </style>
-{% endblock %}
-
-{% block extrahead %}
-  {{ block.super }}
-  <script src="{% static 'js/custom_admin.js' %}"></script>
-{% endblock %}
+{% block title %}{{ title }} | MediCare Admin{% endblock %}
 
 {% block branding %}
-  <div class="admin-brand">
-    <div class="brand-logo">
-      <img src="{% static 'images/logo-Medicare.jpg' %}" alt="MediCare Logo">
-    </div>
-    <div class="brand-text">
-      <h1>MediCare Admin</h1>
-      <p>Smart medication & adherence dashboard</p>
-    </div>
-  </div>
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}" style="color: #2c3e50; text-decoration: none; font-weight: bold;">
+        🏥 MediCare Admin
+    </a>
+</h1>
 {% endblock %}
 
 {% block nav-global %}
-  <div class="admin-top-actions">
-    <a href="{% url 'home' %}" class="admin-top-link">View site</a>
-    <a href="/admin/auth/user/" class="admin-top-link">Users</a>
-  </div>
+<div style="background: #34495e; padding: 10px 20px; margin-bottom: 20px;">
+    <a href="{% url 'home' %}" style="color: white; margin-right: 20px; text-decoration: none;">🏠 Home</a>
+    <a href="{% url 'admin:index' %}" style="color: white; margin-right: 20px; text-decoration: none;">📊 Dashboard</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" style="color: white; text-decoration: none;">🚪 Logout</a>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    /* Better colors for admin panel */
+    #header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .module h2, .module caption, .inline-group h2 {
+        background: #667eea;
+        color: white;
+    }
+    
+    .button, input[type=submit], input[type=button], .submit-row input, button {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    
+    .button:hover, input[type=submit]:hover, input[type=button]:hover {
+        background: #764ba2;
+    }
+    
+    a:link, a:visited {
+        color: #667eea;
+    }
+    
+    #content-main {
+        min-height: 60vh;
+    }
+</style>
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Patient Adherence{% endblock %}
+{% block title %}Patient Adherence - MediCare{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/doctor_adherence.css' %}">
@@ -9,7 +9,9 @@
 
 {% block content %}
 <div class="adherence-container">
-    <h1>Patient Adherence</h1>
+    <a href="{% url 'doctor_dashboard' %}" class="back-button">Back to Dashboard</a>
+    
+    <h1>📊 Patient Adherence Tracking</h1>
     <p>Overview of how well your patients follow their prescriptions.</p>
 
     {% if adherence_data %}
@@ -31,7 +33,14 @@
                     <td>{{ row.taken }}</td>
                     <td>{{ row.missed }}</td>
                     <td>{{ row.total }}</td>
-                    <td>{{ row.adherence_percent }}%</td>
+                    <td>
+                        <span class="adherence-badge 
+                            {% if row.adherence_percent >= 95 %}excellent
+                            {% elif row.adherence_percent >= 80 %}acceptable
+                            {% else %}needs-attention{% endif %}">
+                            {{ row.adherence_percent }}%
+                        </span>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

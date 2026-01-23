@@ -3,25 +3,50 @@
 
 {% block title %}Login - MediCare{% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/user_login.css' %}">
-{% endblock %}
-
 {% block content %}
-<div class="login-page">
-    <div class="login-card">
-        <h2>Login</h2>
+<div style="min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
+    <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 450px; width: 100%;">
+        <h2 style="text-align: center; color: #2c3e50; margin-bottom: 30px;">🏥 Login to MediCare</h2>
         
-        <form method="post">
+        {% if messages %}
+            {% for message in messages %}
+                <div style="padding: 12px; margin-bottom: 20px; border-radius: 5px; 
+                    {% if message.tags == 'error' %}background: #ffebee; color: #c62828;
+                    {% elif message.tags == 'success' %}background: #e8f5e9; color: #2e7d32;
+                    {% else %}background: #e3f2fd; color: #1565c0;{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="post" style="display: flex; flex-direction: column; gap: 20px;">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Login</button>
+            
+            <div>
+                <label for="{{ form.username.id_for_label }}" style="display: block; margin-bottom: 8px; font-weight: 500; color: #34495e;">Username:</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <span style="color: #c62828; font-size: 14px;">{{ form.username.errors.0 }}</span>
+                {% endif %}
+            </div>
+            
+            <div>
+                <label for="{{ form.password.id_for_label }}" style="display: block; margin-bottom: 8px; font-weight: 500; color: #34495e;">Password:</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <span style="color: #c62828; font-size: 14px;">{{ form.password.errors.0 }}</span>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 16px; margin-top: 10px;">
+                Login
+            </button>
         </form>
         
-        <p class="text-center mt-3">
-            <a href="{% url 'password_reset' %}">Forgot password?</a>
-        </p>
+        <div style="text-align: center; margin-top: 25px; padding-top: 25px; border-top: 1px solid #e0e0e0;">
+            <p style="color: #7f8c8d; margin-bottom: 10px;">Don't have an account?</p>
+            <a href="{% url 'signup' %}" class="btn" style="display: inline-block;">Create Account</a>
+        </div>
     </div>
 </div>
 {% endblock %}
-{% block body_class %}login-page{% endblock %}

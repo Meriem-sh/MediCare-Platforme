@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit Profile - MediCare{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header-with-back">
+        <a href="{% url 'profile' %}" class="back-button">Back to Profile</a>
+        <h1>✏️ Edit Profile</h1>
+    </div>
+    
+    <div class="card form-card">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="post" class="form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Username:</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <span class="error-message">{{ form.username.errors.0 }}</span>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Email:</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <span class="error-message">{{ form.email.errors.0 }}</span>
+                {% endif %}
+            </div>
+            
+            {% if user.role == 'patient' %}
+            <div class="form-group">
+                <label for="{{ form.disease.id_for_label }}">Disease:</label>
+                {{ form.disease }}
+                {% if form.disease.errors %}
+                    <span class="error-message">{{ form.disease.errors.0 }}</span>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <button type="submit" class="btn btn-primary">💾 Save Changes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

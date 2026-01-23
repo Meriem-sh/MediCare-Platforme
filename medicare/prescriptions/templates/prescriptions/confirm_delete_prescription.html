@@ -8,29 +8,38 @@
 {% endblock %}
 
 {% block content %}
-<div class="delete-page">
-    <div class="delete-card">
-        <div class="delete-icon">
-            <i class="fas fa-exclamation-triangle"></i>
+<div class="container">
+    <a href="{% url 'doctor_dashboard' %}" class="back-button">Back to Dashboard</a>
+    
+    <div class="card danger-zone" style="max-width: 600px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 64px; color: #e74c3c;"></i>
         </div>
         
-        <h2>Delete Prescription?</h2>
-        <p class="delete-warning">This action cannot be undone.</p>
+        <h2 style="text-align: center; color: #e74c3c; margin-bottom: 10px;">⚠️ Delete Prescription?</h2>
+        <p style="text-align: center; color: #7f8c8d; margin-bottom: 30px;">
+            This action cannot be undone. The prescription will be permanently deleted.
+        </p>
         
-        <div class="delete-details">
-            <p><span class="label">Patient:</span> <strong>{{ prescription.patient.username }}</strong></p>
-            <p><span class="label">Drug:</span> <strong>{{ prescription.drug.name }}</strong></p>
-            <p><span class="label">Dosage:</span> {{ prescription.dosage }}</p>
-            <p><span class="label">Frequency:</span> {{ prescription.frequency }}</p>
+        <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
+            <h3 style="margin-bottom: 15px; color: #2c3e50;">Prescription Details:</h3>
+            <div style="display: grid; gap: 10px;">
+                <p><span style="font-weight: 600; color: #7f8c8d;">Patient:</span> <strong>{{ prescription.patient.username }}</strong></p>
+                <p><span style="font-weight: 600; color: #7f8c8d;">Drug:</span> <strong>{{ prescription.drug.name }}</strong></p>
+                <p><span style="font-weight: 600; color: #7f8c8d;">Dosage:</span> {{ prescription.dosage }}</p>
+                <p><span style="font-weight: 600; color: #7f8c8d;">Frequency:</span> {{ prescription.frequency }}</p>
+                <p><span style="font-weight: 600; color: #7f8c8d;">Start Date:</span> {{ prescription.start_date }}</p>
+                <p><span style="font-weight: 600; color: #7f8c8d;">End Date:</span> {{ prescription.end_date }}</p>
+            </div>
         </div>
         
-        <form method="post">
+        <form method="post" style="display: flex; gap: 10px; justify-content: center;">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger delete-btn">
-                <i class="fas fa-trash-alt me-2"></i> Yes, Delete
+            <button type="submit" class="btn btn-danger">
+                🗑️ Yes, Delete Prescription
             </button>
-            <a href="{% url 'doctor_dashboard' %}" class="btn btn-secondary cancel-btn">
-                <i class="fas fa-arrow-left me-2"></i> Cancel
+            <a href="{% url 'doctor_dashboard' %}" class="btn btn-secondary">
+                ← Cancel
             </a>
         </form>
     </div>

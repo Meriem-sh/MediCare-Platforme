@@ -62,3 +62,9 @@ class CustomUser(AbstractUser):
     @property
     def is_patient(self):
         return self.role == 'patient'
+
+class Meta:
+    indexes = [
+        models.Index(fields=['role']),
+        models.Index(fields=['disease']),  
+    ]
