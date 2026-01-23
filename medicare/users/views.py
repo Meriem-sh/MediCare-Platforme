@@ -1,18 +1,14 @@
 from django.shortcuts import render, redirect
-# Create your views here.
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser
 from prescriptions.models import Prescription
 from reminders.models import Reminder, DoseLog
 from django.contrib.auth import logout
-from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import PatientSignUpForm
 from django.core.mail import send_mail
-from django.db.models import Q
 
 
 # ===================================
@@ -30,7 +26,7 @@ def dashboard_redirect(request):
     
     # Check if user is admin/superuser
     if user.is_superuser or user.is_staff:
-        return redirect('admin:index')  # ✅ Admin panel
+        return redirect('admin:index')
     
     # Check user role
     if user.role == 'doctor':
@@ -38,7 +34,6 @@ def dashboard_redirect(request):
     elif user.role == 'patient':
         return redirect('patient_dashboard')
     else:
-        # Fallback to home page if no role defined
         return redirect('home')
 
 
@@ -61,7 +56,7 @@ def doctor_dashboard(request):
     
     reminders = Reminder.objects.filter(
         prescription__doctor=request.user
-    ).select_related('prescription__patient', 'prescription__drug').order_by('-created_at')[:10]
+    ).select_related('patient', 'prescription__drug').order_by('-created_at')[:10]
     
     context = {
         'patients': patients,
@@ -80,21 +75,22 @@ def patient_dashboard(request):
     if request.user.role != 'patient':
         return redirect('doctor_dashboard')
     
-    patient = request.user  # current logged-in patient
+    patient = request.user
     
-    # ✅ FIX: Optimize queries with select_related and prefetch_related
+    # ✅ FIX: Use direct patient field in Reminder
     prescriptions = Prescription.objects.filter(
         patient=request.user
     ).select_related('doctor', 'drug', 'disease').order_by('-created_at')
     
+    # ✅ FIX: Reminder has direct patient field
     reminders = Reminder.objects.filter(
-        prescription__patient=request.user,  # ✅ FIXED
+        patient=request.user,
         is_active=True
     ).select_related('prescription__drug').order_by('time')
     
-    # ✅ FIX: Correct the filter path
+    # ✅ FIX: Use direct patient field through reminder
     dose_logs = DoseLog.objects.filter(
-        reminder__prescription__patient=request.user  # ✅ FIXED
+        reminder__patient=request.user
     ).select_related('reminder__prescription__drug').order_by('-logged_at')[:20]
     
     context = {
@@ -118,14 +114,15 @@ def doctor_adherence(request):
     adherence_data = []
     
     for patient in patients:
+        # ✅ FIX: Use direct patient field
         logs = DoseLog.objects.filter(
-            reminder__prescription__patient=patient,  # ✅ FIXED
+            reminder__patient=patient,
             reminder__prescription__doctor=request.user
         )
         
         total = logs.count()
         if total == 0:
-            continue  # skip patients with no logs
+            continue
         
         taken_count = logs.filter(status='taken').count()
         missed_count = logs.filter(status='missed').count()
@@ -139,7 +136,7 @@ def doctor_adherence(request):
             'adherence_percent': adherence_percent,
         })
     
-    # Sort by adherence (lowest first to highlight problems)
+    # Sort by adherence (lowest first)
     adherence_data.sort(key=lambda x: x['adherence_percent'])
     
     context = {
@@ -153,26 +150,22 @@ def doctor_adherence(request):
 @login_required
 def custom_logout(request):
     logout(request)
-    return redirect('home')  # ✅ Updated to redirect to home
+    return redirect('home')
 
 
 @login_required
 def suggest_specialists(request):
     user = request.user
     
-    # Only patients should use this
     if user.role != 'patient':
-        return redirect('doctor_dashboard')  # or wherever you want
+        return redirect('doctor_dashboard')
     
-    # Patient must have a disease selected
     if not user.disease:
-        # you can show a message instead if you use messages framework
         return render(request, 'users/no_disease_selected.html')
     
     disease = user.disease
     recommended_specialty = disease.recommended_specialty
     
-    # If no specialty defined for that disease
     if not recommended_specialty:
         doctors = CustomUser.objects.filter(role='doctor').select_related('specialty')
     else:
@@ -201,7 +194,7 @@ def assign_doctor(request, doctor_id):
     patient.assigned_doctor = doctor
     patient.save()
     
-    return redirect('patient_dashboard')  # or a success page
+    return redirect('patient_dashboard')
 
 
 def home(request):
@@ -215,7 +208,7 @@ def signup_view(request):
             user = form.save()
             
             # 📨 Send welcome email
-            if user.email:  # only if they gave an email
+            if user.email:
                 send_mail(
                     subject='Welcome to Medicare',
                     message=(
@@ -225,13 +218,13 @@ def signup_view(request):
                         'find specialists suitable for your disease.\n\n'
                         'This is an automated message, please do not reply.'
                     ),
-                    from_email=None,  # uses DEFAULT_FROM_EMAIL
+                    from_email=None,
                     recipient_list=[user.email],
                     fail_silently=True,
                 )
             
             login(request, user)
-            return redirect('dashboard_redirect')  # will send patient to patient_dashboard
+            return redirect('dashboard_redirect')
     else:
         form = PatientSignUpForm()
     
