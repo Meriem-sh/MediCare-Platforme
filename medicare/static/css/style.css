@@ -2,6 +2,7 @@
    GLOBAL STYLES FOR MEDICARE PLATFORM
    ======================================== */
 
+
 /* =========================
    Base Styles
    ========================= */
@@ -11,12 +12,14 @@
     box-sizing: border-box;
 }
 
+
 body {
     font-family: 'Poppins', sans-serif;
     color: #333;
     background-color: #f5f7fa;
     line-height: 1.6;
 }
+
 
 /* =========================
    Navbar Styles
@@ -25,13 +28,16 @@ body {
     transition: all 0.3s ease;
 }
 
+
 .navbar-brand {
     transition: transform 0.3s ease;
 }
 
+
 .navbar-brand:hover {
     transform: scale(1.05);
 }
+
 
 .nav-link {
     font-weight: 500;
@@ -40,14 +46,17 @@ body {
     color: #495057 !important;
 }
 
+
 .nav-link:hover {
     color: #1e3c72 !important;
     transform: translateY(-2px);
 }
 
+
 .nav-link i {
     margin-right: 0.3rem;
 }
+
 
 /* User Dropdown Menu Styling */
 .dropdown-menu {
@@ -57,10 +66,12 @@ body {
     margin-top: 0.5rem;
 }
 
+
 .dropdown-item {
     padding: 0.6rem 1.2rem;
     transition: all 0.2s ease;
 }
+
 
 .dropdown-item:hover {
     background-color: #f8f9fa;
@@ -68,10 +79,12 @@ body {
     padding-left: 1.5rem;
 }
 
+
 .dropdown-item i {
     margin-right: 0.5rem;
     width: 20px;
 }
+
 
 .dropdown-item button {
     background: none;
@@ -81,9 +94,11 @@ body {
     font-size: 1rem;
 }
 
+
 .dropdown-divider {
     margin: 0.5rem 0;
 }
+
 
 /* =========================
    Footer Styles
@@ -93,23 +108,28 @@ body {
     margin-top: auto;
 }
 
+
 .footer h5, .footer h6 {
     color: white;
     font-weight: 600;
 }
 
+
 .footer a {
     transition: all 0.3s ease;
 }
+
 
 .footer a:hover {
     color: white !important;
     padding-left: 0.5rem;
 }
 
+
 .footer .list-unstyled li {
     margin-bottom: 0.5rem;
 }
+
 
 /* =========================
    Button Styles
@@ -121,15 +141,18 @@ body {
     transition: all 0.3s ease;
 }
 
+
 .btn-primary {
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     border: none;
 }
 
+
 .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
 }
+
 
 /* =========================
    Animations
@@ -145,6 +168,7 @@ body {
     }
 }
 
+
 @keyframes float {
     0%, 100% {
         transform: translateY(0);
@@ -154,6 +178,7 @@ body {
     }
 }
 
+
 /* =========================
    Utility Classes
    ========================= */
@@ -161,13 +186,16 @@ body {
     color: #1e3c72 !important;
 }
 
+
 .bg-primary {
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%) !important;
 }
 
+
 .shadow-sm {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important;
 }
+
 
 /* =========================
    Responsive Design
@@ -186,6 +214,7 @@ body {
     }
 }
 
+
 /* =========================
    Scrollbar Styling
    ========================= */
@@ -193,15 +222,274 @@ body {
     width: 10px;
 }
 
+
 ::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
+
 
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     border-radius: 5px;
 }
 
+
 ::-webkit-scrollbar-thumb:hover {
     background: #1e3c72;
+}
+
+
+/* =========================
+   Fix for Login & Admin Pages
+   ========================= */
+
+
+/* Compact Navbar for Login/Signup Pages */
+body.login-page .navbar,
+body.signup-page .navbar,
+body.password-reset-page .navbar {
+    padding: 0.5rem 0;
+}
+
+
+body.login-page .navbar-brand img,
+body.signup-page .navbar-brand img,
+body.password-reset-page .navbar-brand img {
+    height: 40px !important;
+}
+
+
+body.login-page .navbar-brand span,
+body.signup-page .navbar-brand span,
+body.password-reset-page .navbar-brand span {
+    font-size: 1.2rem !important;
+}
+
+
+body.login-page .nav-link,
+body.signup-page .nav-link,
+body.password-reset-page .nav-link {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem !important;
+}
+
+
+/* Compact Footer for Login/Signup Pages */
+body.login-page .footer,
+body.signup-page .footer,
+body.password-reset-page .footer {
+    padding: 1.5rem 0 !important;
+    font-size: 0.85rem;
+}
+
+
+body.login-page .footer h5,
+body.signup-page .footer h5,
+body.password-reset-page .footer h5 {
+    font-size: 1rem !important;
+}
+
+
+body.login-page .footer h6,
+body.signup-page .footer h6,
+body.password-reset-page .footer h6 {
+    font-size: 0.9rem !important;
+}
+
+
+body.login-page .footer img,
+body.signup-page .footer img,
+body.password-reset-page .footer img {
+    height: 45px !important;
+}
+
+
+/* Admin Page Adjustments */
+body.admin-page .navbar {
+    display: none; /* Hide custom navbar in admin */
+}
+
+
+body.admin-page .footer {
+    padding: 1rem 0 !important;
+    font-size: 0.8rem;
+}
+
+
+/* =========================
+   Quick Actions Styling
+   ========================= */
+.quick-actions-section {
+    margin-top: 2rem;
+}
+
+
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: transparent;
+}
+
+
+.quick-action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+
+.quick-action-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+    color: white;
+    text-decoration: none;
+}
+
+
+.quick-action-btn i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+
+.quick-action-btn span {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+
+/* =========================
+   Back Button Styling
+   ========================= */
+.back-btn-container {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+
+.back-btn,
+.btn-secondary {
+    background: #6c757d;
+    border: none;
+    color: white !important;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+
+.back-btn:hover,
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+    color: white !important;
+    text-decoration: none;
+}
+
+
+.back-btn i,
+.btn-secondary i {
+    font-size: 1rem;
+}
+
+
+/* =========================
+   Responsive Quick Actions
+   ========================= */
+@media (max-width: 768px) {
+    .quick-actions-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .quick-action-btn {
+        padding: 1.5rem 0.8rem;
+    }
+    
+    .quick-action-btn i {
+        font-size: 2rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .quick-action-btn span {
+        font-size: 0.9rem;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .quick-actions-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+    }
+    
+    .quick-action-btn {
+        padding: 1.2rem 0.6rem;
+    }
+    
+    .quick-action-btn i {
+        font-size: 1.8rem;
+    }
+}
+
+/* =========================
+   Loading Spinner
+   ========================= */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.loading-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #1e3c72;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    position: absolute;
+    margin-top: 100px;
+    font-size: 1.2rem;
+    color: #1e3c72;
+    font-weight: 600;
 }

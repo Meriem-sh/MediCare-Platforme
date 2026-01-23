@@ -19,4 +19,37 @@ document.addEventListener("DOMContentLoaded", () => {
             item.classList.add("status-missed");
         }
     });
+    
+    // Add Quick Actions
+    addQuickActionsToPatient();
 });
+
+function addQuickActionsToPatient() {
+    const mainContainer = document.querySelector('.patient-page');
+    
+    if (mainContainer && !document.querySelector('.quick-actions-section')) {
+        const quickActionsHTML = `
+            <section class="card mt-4">
+                <div class="card-header">
+                    <h2>⚡ Quick Actions</h2>
+                </div>
+                <div class="quick-actions-grid">
+                    <a href="/users/specialists/" class="quick-action-btn">
+                        <i class="fas fa-user-md"></i>
+                        <span>Find Specialist</span>
+                    </a>
+                    <a href="/users/patient/dashboard/" class="quick-action-btn">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Refresh Dashboard</span>
+                    </a>
+                    <a href="/" class="quick-action-btn">
+                        <i class="fas fa-home"></i>
+                        <span>Go to Home</span>
+                    </a>
+                </div>
+            </section>
+        `;
+        
+        mainContainer.insertAdjacentHTML('beforeend', quickActionsHTML);
+    }
+}

@@ -24,4 +24,23 @@ document.addEventListener("DOMContentLoaded", () => {
             fill.style.width = percent + "%";
         });
     });
+    
+    // Add Back Button
+    addBackButtonToAdherence();
 });
+
+function addBackButtonToAdherence() {
+    const adherenceHeader = document.querySelector('.adherence-header');
+    
+    if (adherenceHeader && !document.querySelector('.back-btn-container')) {
+        const backButtonHTML = `
+            <div class="back-btn-container">
+                <a href="/users/doctor/dashboard/" class="btn btn-secondary back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        `;
+        
+        adherenceHeader.insertAdjacentHTML('beforeend', backButtonHTML);
+    }
+}
