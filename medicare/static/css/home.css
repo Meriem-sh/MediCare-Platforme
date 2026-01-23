@@ -222,3 +222,19 @@
         padding: 30px 20px;
     }
 }
+
+/* =========================
+   Welcome Message for Logged Users
+   ========================= */
+.welcome-message h3 {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    animation: fadeInUp 0.8s ease;
+}
+
+.text-white-75 {
+    opacity: 0.9;
+}
+
+.welcome-message .btn {
+    animation: fadeInUp 1s ease;
+}

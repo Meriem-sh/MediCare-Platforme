@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # Redirect URLs after login/logout
-LOGIN_REDIRECT_URL = 'dashboard_redirect'  # ✅ Fixed!
+LOGIN_REDIRECT_URL = 'home'  # ✅ Fixed!
 LOGOUT_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 
