@@ -1,10 +1,28 @@
-<h1>Add reminder for {{ prescription.patient.username }}</h1>
-<p>Drug: {{ prescription.drug.name }}</p>
+{% extends "base.html" %}
+{% load static %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save reminder</button>
-</form>
+{% block title %}Create Reminder - MediCare{% endblock %}
 
-<a href="{% url 'doctor_dashboard' %}">⬅ Back to dashboard</a>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/prescription_form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="prescription-card">
+        <div class="card-header">
+            <h1>Create Reminder</h1>
+        </div>
+        
+        <form method="post" class="prescription-form">
+            {% csrf_token %}
+            <div class="form-grid">
+                {{ form.as_p }}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn primary">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

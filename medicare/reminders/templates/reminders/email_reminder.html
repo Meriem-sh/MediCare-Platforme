@@ -1,19 +1,24 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Email reminder{% endblock %}
 
-{% block content %}
-  {% if sent %}
-    <h2>Email sent ✅</h2>
-    <p>The reminder was sent to {{ patient.email }}.</p>
-  {% else %}
-    <h2>Send reminder to {{ patient.username }}</h2>
-    <p>This will email the current prescription schedule to the patient.</p>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/prescription_form.css' %}">
+{% endblock %}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Send email</button>
-    </form>
-  {% endif %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="prescription-card">
+        {% if sent %}
+            <h2>The reminder was sent to {{ patient.email }}.</h2>
+        {% else %}
+            <h2>This will email the current prescription schedule to the patient.</h2>
+        {% endif %}
+        
+        <div class="form-actions">
+            <a href="{% url 'doctor_dashboard' %}" class="btn secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -6,6 +6,29 @@
 {% block extrastyle %}
   {{ block.super }}
   <link rel="stylesheet" href="{% static 'css/custom_admin.css' %}">
+  <style>
+    /* Quick style for logo */
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    .brand-logo img {
+      height: 50px;
+      border-radius: 8px;
+    }
+    .brand-text h1 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: #1e3c72;
+    }
+    .brand-text p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #64748b;
+    }
+  </style>
 {% endblock %}
 
 {% block extrahead %}
@@ -15,7 +38,9 @@
 
 {% block branding %}
   <div class="admin-brand">
-    <div class="brand-logo">💊</div>
+    <div class="brand-logo">
+      <img src="{% static 'images/logo-Medicare.jpg' %}" alt="MediCare Logo">
+    </div>
     <div class="brand-text">
       <h1>MediCare Admin</h1>
       <p>Smart medication & adherence dashboard</p>
@@ -25,7 +50,7 @@
 
 {% block nav-global %}
   <div class="admin-top-actions">
-    <a href="/" class="admin-top-link">View site</a>
+    <a href="{% url 'home' %}" class="admin-top-link">View site</a>
     <a href="/admin/auth/user/" class="admin-top-link">Users</a>
   </div>
 {% endblock %}

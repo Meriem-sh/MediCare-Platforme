@@ -1,14 +1,26 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Edit Reminder{% endblock %}
+{% block title %}Edit Reminder - MediCare{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/edit_prescription.css' %}">
+{% endblock %}
 
 {% block content %}
-<h2>Edit Reminder</h2>
-
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Save changes</button>
-    <a href="{% url 'doctor_dashboard' %}" class="btn btn-secondary">Cancel</a>
-</form>
+<div class="edit-page">
+    <div class="edit-card">
+        <h2>Edit Reminder</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-fields">
+                {{ form.as_p }}
+            </div>
+            <div class="edit-actions">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

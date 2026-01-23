@@ -1,20 +1,28 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Delete Reminder{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/confirm_delete_prescription.css' %}">
+{% endblock %}
+
 {% block content %}
-<h2>Delete Reminder</h2>
-
-<p>Are you sure you want to delete this reminder?</p>
-<p>
-    Patient: <strong>{{ reminder.patient.username }}</strong><br>
-    Drug: <strong>{{ reminder.prescription.drug.name }}</strong><br>
-    Time: {{ reminder.time }}
-</p>
-
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Yes, delete</button>
-    <a href="{% url 'doctor_dashboard' %}" class="btn btn-secondary">Cancel</a>
-</form>
+<div class="delete-page">
+    <div class="delete-card">
+        <h2>Are you sure you want to delete this reminder?</h2>
+        
+        <div class="delete-details">
+            <p><span class="label">Patient:</span> <strong>{{ reminder.patient.username }}</strong></p>
+            <p><span class="label">Drug:</span> <strong>{{ reminder.prescription.drug.name }}</strong></p>
+            <p><span class="label">Time:</span> {{ reminder.time }}</p>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger delete-btn">Delete</button>
+            <a href="{% url 'doctor_dashboard' %}" class="btn btn-secondary cancel-btn">Cancel</a>
+        </form>
+    </div>
+</div>
 {% endblock %}
