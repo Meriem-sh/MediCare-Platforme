@@ -166,7 +166,7 @@ def suggest_specialists(request):
         'doctors': doctors,
     }
     
-    return render(request, 'users/suggest_specialists.html', context)
+    return render(request, 'users/suggest_specialist.html', context)
 
 
 @login_required
