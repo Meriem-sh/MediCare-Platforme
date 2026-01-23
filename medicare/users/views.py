@@ -11,24 +11,13 @@ from .forms import PatientSignUpForm
 from django.core.mail import send_mail
 
 
-# ===================================
-# Dashboard Redirect based on Role
-# ===================================
 @login_required
 def dashboard_redirect(request):
-    """
-    Redirect user to appropriate dashboard based on user role:
-    - Admin/Superuser → Admin Panel
-    - Doctor → Doctor Dashboard
-    - Patient → Patient Dashboard
-    """
     user = request.user
     
-    # Check if user is admin/superuser
     if user.is_superuser or user.is_staff:
         return redirect('admin:index')
     
-    # Check user role
     if user.role == 'doctor':
         return redirect('doctor_dashboard')
     elif user.role == 'patient':
@@ -42,7 +31,6 @@ def doctor_dashboard(request):
     if request.user.role != 'doctor':
         return redirect('patient_dashboard')
     
-    # Optimize queries with select_related
     patients = CustomUser.objects.filter(role='patient').select_related('disease', 'assigned_doctor')
     
     rare_patients = CustomUser.objects.filter(
@@ -50,9 +38,10 @@ def doctor_dashboard(request):
         disease__is_rare=True
     ).select_related('disease')
     
+    # ✅ FIX: Use drug__disease instead of disease
     prescriptions = Prescription.objects.filter(
         doctor=request.user
-    ).select_related('patient', 'drug', 'disease').order_by('-created_at')[:10]
+    ).select_related('patient', 'drug', 'drug__disease').order_by('-created_at')[:10]
     
     reminders = Reminder.objects.filter(
         prescription__doctor=request.user
@@ -77,16 +66,16 @@ def patient_dashboard(request):
     
     patient = request.user
     
-    # ✅ FIX: Use direct patient field in Reminder
+    # ✅ FIX: Use drug__disease for proper optimization
     prescriptions = Prescription.objects.filter(
         patient=request.user
-    ).select_related('doctor', 'drug', 'disease').order_by('-created_at')
+    ).select_related('doctor', 'drug', 'drug__disease').order_by('-created_at')
     
-    # ✅ FIX: Reminder has direct patient field
+    # ✅ FIX: Use direct patient field in Reminder
     reminders = Reminder.objects.filter(
         patient=request.user,
         is_active=True
-    ).select_related('prescription__drug').order_by('time')
+    ).select_related('prescription__drug', 'prescription__drug__disease').order_by('time')
     
     # ✅ FIX: Use direct patient field through reminder
     dose_logs = DoseLog.objects.filter(
@@ -114,7 +103,6 @@ def doctor_adherence(request):
     adherence_data = []
     
     for patient in patients:
-        # ✅ FIX: Use direct patient field
         logs = DoseLog.objects.filter(
             reminder__patient=patient,
             reminder__prescription__doctor=request.user
@@ -136,7 +124,6 @@ def doctor_adherence(request):
             'adherence_percent': adherence_percent,
         })
     
-    # Sort by adherence (lowest first)
     adherence_data.sort(key=lambda x: x['adherence_percent'])
     
     context = {
@@ -167,12 +154,12 @@ def suggest_specialists(request):
     recommended_specialty = disease.recommended_specialty
     
     if not recommended_specialty:
-        doctors = CustomUser.objects.filter(role='doctor').select_related('specialty')
+        doctors = CustomUser.objects.filter(role='doctor')
     else:
         doctors = CustomUser.objects.filter(
             role='doctor',
             specialty=recommended_specialty
-        ).select_related('specialty')
+        )
     
     context = {
         'patient': user,
@@ -207,7 +194,6 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             
-            # 📨 Send welcome email
             if user.email:
                 send_mail(
                     subject='Welcome to Medicare',
