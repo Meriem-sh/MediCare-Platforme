@@ -12,6 +12,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import PatientSignUpForm
 from django.core.mail import send_mail
+from django.db.models import Q
+
 
 # ===================================
 # Dashboard Redirect based on Role
@@ -39,27 +41,39 @@ def dashboard_redirect(request):
         # Fallback to home page if no role defined
         return redirect('home')
 
+
 @login_required
 def doctor_dashboard(request):
     if request.user.role != 'doctor':
         return redirect('patient_dashboard')
     
-    patients = CustomUser.objects.filter(role='patient')
+    # Optimize queries with select_related
+    patients = CustomUser.objects.filter(role='patient').select_related('disease', 'assigned_doctor')
+    
     rare_patients = CustomUser.objects.filter(
         role='patient',
         disease__is_rare=True
     ).select_related('disease')
-    prescriptions = Prescription.objects.filter(doctor=request.user)
-    reminders = Reminder.objects.filter(prescription__doctor=request.user)
+    
+    prescriptions = Prescription.objects.filter(
+        doctor=request.user
+    ).select_related('patient', 'drug', 'disease').order_by('-created_at')[:10]
+    
+    reminders = Reminder.objects.filter(
+        prescription__doctor=request.user
+    ).select_related('prescription__patient', 'prescription__drug').order_by('-created_at')[:10]
     
     context = {
         'patients': patients,
         'prescriptions': prescriptions,
         'reminders': reminders,
         'rare_patients': rare_patients,
+        'total_patients': patients.count(),
+        'total_prescriptions': prescriptions.count(),
     }
     
     return render(request, 'users/doctor_dashboard.html', context)
+
 
 @login_required
 def patient_dashboard(request):
@@ -67,30 +81,45 @@ def patient_dashboard(request):
         return redirect('doctor_dashboard')
     
     patient = request.user  # current logged-in patient
-    prescriptions = Prescription.objects.filter(patient=request.user)
-    reminders = Reminder.objects.filter(patient=request.user, is_active=True)
-    dose_logs = DoseLog.objects.filter(reminder__patient=request.user).order_by('-logged_at')
+    
+    # ✅ FIX: Optimize queries with select_related and prefetch_related
+    prescriptions = Prescription.objects.filter(
+        patient=request.user
+    ).select_related('doctor', 'drug', 'disease').order_by('-created_at')
+    
+    reminders = Reminder.objects.filter(
+        prescription__patient=request.user,  # ✅ FIXED
+        is_active=True
+    ).select_related('prescription__drug').order_by('time')
+    
+    # ✅ FIX: Correct the filter path
+    dose_logs = DoseLog.objects.filter(
+        reminder__prescription__patient=request.user  # ✅ FIXED
+    ).select_related('reminder__prescription__drug').order_by('-logged_at')[:20]
     
     context = {
         'patient': patient,
         'prescriptions': prescriptions,
         'reminders': reminders,
         'dose_logs': dose_logs,
+        'total_prescriptions': prescriptions.count(),
+        'active_reminders': reminders.count(),
     }
     
     return render(request, 'users/patient_dashboard.html', context)
+
 
 @login_required
 def doctor_adherence(request):
     if request.user.role != 'doctor':
         return redirect('patient_dashboard')
     
-    patients = CustomUser.objects.filter(role='patient')
+    patients = CustomUser.objects.filter(role='patient').select_related('disease')
     adherence_data = []
     
     for patient in patients:
         logs = DoseLog.objects.filter(
-            reminder__patient=patient,
+            reminder__prescription__patient=patient,  # ✅ FIXED
             reminder__prescription__doctor=request.user
         )
         
@@ -110,17 +139,22 @@ def doctor_adherence(request):
             'adherence_percent': adherence_percent,
         })
     
+    # Sort by adherence (lowest first to highlight problems)
+    adherence_data.sort(key=lambda x: x['adherence_percent'])
+    
     context = {
         'adherence_data': adherence_data,
     }
     
     return render(request, 'users/doctor_adherence.html', context)
 
+
 @require_POST
 @login_required
 def custom_logout(request):
     logout(request)
     return redirect('home')  # ✅ Updated to redirect to home
+
 
 @login_required
 def suggest_specialists(request):
@@ -140,12 +174,12 @@ def suggest_specialists(request):
     
     # If no specialty defined for that disease
     if not recommended_specialty:
-        doctors = CustomUser.objects.filter(role='doctor')
+        doctors = CustomUser.objects.filter(role='doctor').select_related('specialty')
     else:
         doctors = CustomUser.objects.filter(
             role='doctor',
             specialty=recommended_specialty
-        )
+        ).select_related('specialty')
     
     context = {
         'patient': user,
@@ -155,6 +189,7 @@ def suggest_specialists(request):
     }
     
     return render(request, 'users/suggest_specialists.html', context)
+
 
 @login_required
 def assign_doctor(request, doctor_id):
@@ -168,8 +203,10 @@ def assign_doctor(request, doctor_id):
     
     return redirect('patient_dashboard')  # or a success page
 
+
 def home(request):
     return render(request, 'users/home.html')
+
 
 def signup_view(request):
     if request.method == 'POST':
