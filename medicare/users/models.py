@@ -1,8 +1,8 @@
-
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from drugs.models import Disease
+
 
 
 class CustomUser(AbstractUser):
@@ -21,6 +21,7 @@ class CustomUser(AbstractUser):
         ('pulmonologist', 'Pulmonologist'),
         ('other', 'Other'),
     )
+
 
     role = models.CharField(max_length=10, choices=ROLE_CHOICES)
     phone = models.CharField(max_length=20, blank=True, null=True)
@@ -50,5 +51,14 @@ class CustomUser(AbstractUser):
         limit_choices_to={'role': 'doctor'}
     )
 
+
     def __str__(self):
         return f"{self.username} ({self.role})"
+    
+    @property
+    def is_doctor(self):
+        return self.role == 'doctor'
+    
+    @property
+    def is_patient(self):
+        return self.role == 'patient'
