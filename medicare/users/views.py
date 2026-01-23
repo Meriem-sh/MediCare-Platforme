@@ -38,10 +38,9 @@ def doctor_dashboard(request):
         disease__is_rare=True
     ).select_related('disease')
     
-    # ✅ FIX: Use drug__disease instead of disease
     prescriptions = Prescription.objects.filter(
         doctor=request.user
-    ).select_related('patient', 'drug', 'drug__disease').order_by('-created_at')[:10]
+    ).select_related('patient', 'drug').order_by('-created_at')[:10]
     
     reminders = Reminder.objects.filter(
         prescription__doctor=request.user
@@ -66,18 +65,17 @@ def patient_dashboard(request):
     
     patient = request.user
     
-    # ✅ FIX: Use drug__disease for proper optimization
+    # ✅ FIX: Remove all 'disease' references
     prescriptions = Prescription.objects.filter(
         patient=request.user
-    ).select_related('doctor', 'drug', 'drug__disease').order_by('-created_at')
+    ).select_related('doctor', 'drug').order_by('-created_at')
     
-    # ✅ FIX: Use direct patient field in Reminder
+    # ✅ FIX: Remove 'prescription__drug__disease'
     reminders = Reminder.objects.filter(
         patient=request.user,
         is_active=True
-    ).select_related('prescription__drug', 'prescription__drug__disease').order_by('time')
+    ).select_related('prescription__drug').order_by('time')
     
-    # ✅ FIX: Use direct patient field through reminder
     dose_logs = DoseLog.objects.filter(
         reminder__patient=request.user
     ).select_related('reminder__prescription__drug').order_by('-logged_at')[:20]
