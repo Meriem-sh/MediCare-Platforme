@@ -29,6 +29,11 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             
+            # 🔥
+            print("🚀 === WELCOME EMAIL DEBUG ===")
+            print(f"📧 User: {user.username} | Email: {user.email}")
+            print(f"⚙️  EMAIL_BACKEND: {settings.EMAIL_BACKEND}")
+                        
             # Send welcome email
             if user.email:
                 send_mail(
