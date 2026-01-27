@@ -6,7 +6,7 @@
 {% block content %}
 <div class="container">
     <div class="page-header-with-back">
-        <a href="{% if user.role == 'admin' %}{% url 'admin:index' %}{% elif user.role == 'doctor' %}{% url 'doctor_dashboard' %}{% else %}{% url 'patient_dashboard' %}{% endif %}" class="back-button">
+        <a href="{% if user.is_superuser %}{% url 'admin:index' %}{% elif user.role == 'doctor' %}{% url 'doctor_dashboard' %}{% else %}{% url 'patient_dashboard' %}{% endif %}" class="back-button">
             Back to Dashboard
         </a>
         <h1>👤 My Profile</h1>
